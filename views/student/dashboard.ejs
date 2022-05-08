@@ -1,12 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlacMan</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PlacMan | A placement Management system</title>
+
+  <!-- Normalize browser inconsistencies -->
+  <link rel="stylesheet" href="/css/normalize.css">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <script defer src="/js/fontawesome-all.min.js"></script>
+  <!-- MD Bootstrap -->
+  <link rel="stylesheet" href="/css/mdb.min.css">
+  <!-- Custom stylesheet -->
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <style>
+    /* Scrollbar styling */
+
+    body::-webkit-scrollbar {
+      width: 9px;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: rgba(29, 17, 17, 0.788);
+    }
+
+    body::-webkit-scrollbar-track {
+      background-color: rgb(230, 223, 223);
+      border-radius: 10px;
+    }
+
+    /* Profile Modal */
+
+    .card.profile-card {
+      width: 100%;
+      margin: 0;
+    }
+
+    #profileModal .modal-content,
+    #profileModal .modal-content .modal-body,
+    #profileModal .modal-content .modal-body .card.profile-card {
+      border-radius: 10px;
+    }
+
+    #profileModal .modal-content .modal-body .card.profile-card img {
+      border-radius: 10px 10px 0 0;
+    }
+  </style>
 </head>
+
 <body>
-    <h1>Welcome !</h1>
+  <!-- Wrapper stretches to the whole viewport height -->
+  <div class="wrapper">
+    <!-- Sidebar -->
+    <%-include('includes/sidebar');%>
+
+    <!-- Main -->
+    <main>
+      <!-- Topbar -->
+      <%-include('../auth-includes/topbar');%> 
+      <!--  -->
+
+      <!-- Content -->
+      <div class="content">
+
+        <!-- First card -->
+        <article class="card card-cascade wider reverse my-4">
+          <section class="card-header">
+            <img src="/img/student-img.jpg" class="rounded-circle" alt="Profile picture">
+            <h4 class="card-title m-2">Welcome <%=student.name%> !</h4>
+          </section>
+          <section class="view overlay">
+            <img src="/img/card-img/art-of-living.jpg" alt="Trees" class="img-fluid">
+            <a href="#">
+              <div class="mask rgba-white-slight"></div>
+            </a>
+          </section>
+          <section class="card-body text-center">
+            <h4 class="card-title">Student Information</h4>
+            <p class="card-text">
+              Upload your Resume and fill in the
+              <a href="#"><span class="pink-text">next steps.</span></a>
+            </p>
+            <a href="#"><button class="btn btn-outline-indigo darken-4">Upload Resume</button></a>
+          </section>
+        </article>
+
+        <!-- Second card -->
+        <article class="card">
+          <section class="card-header">
+            <!-- <img src="./img/infy.jpg" class="rounded-circle" alt="Profile picture"> -->
+            <h4 class="card-title m-2"><strong>Infosys</strong></h4>
+          </section>
+          <section class="card-body">
+            <h6 class="light-green-text accent-3">
+              <i class="far fa-bell"></i>
+              Update
+            </h6>
+            <br>
+
+            <p class="card-text">
+              Infosys Limited has shown interest to conduct a recruitment drive. All interested
+              students are requested to complete the necessary steps before the deadline.
+            </p>
+          </section>
+          <section class="card-footer text-right">
+            <a href="#"><button class="btn btn-light-green accent-3" data-toggle="modal" data-target="#profileModal">View opportunity</button></a>
+          </section>
+        </article>
+        
+      </div>
+    </main>
+  </div>
+
+  <!-- Bootstrap dependencies -->
+  <!-- First jQuery, then Popper.js and lastly Bootstrap JS -->
+  <script src="/js/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="/js/mdb.min.js"></script>
+  <!-- Custom script -->
+  <script src="/js/scripts.js"></script>
 </body>
+
 </html>

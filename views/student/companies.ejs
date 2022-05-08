@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Student | Dashboard</title>
+
+  <!-- Normalize browser inconsistencies -->
+  <link rel="stylesheet" href="./css/normalize.css">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <script defer src="./js/fontawesome-all.min.js"></script>
+  <!-- MD Bootstrap -->
+  <link rel="stylesheet" href="./css/mdb.min.css">
+  <!-- Custom stylesheet -->
+  <link rel="stylesheet" href="./css/styles.css">
+  <style>
+    .content .card {
+      min-width: 900px;
+      width: 85%;
+    }
+
+    /* Scrollbar styling */
+
+    body::-webkit-scrollbar {
+      width: 9px;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-image: linear-gradient(40deg, #59c0e6, #0f1435);
+    }
+
+    body::-webkit-scrollbar-track {
+      background-color: rgb(230, 223, 223);
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Wrapper stretches to the whole viewport height -->
+  <div class="wrapper">
+    <!-- Sidebar -->
+    <%-include('includes/sidebar');%>
+
+    <!-- Main -->
+    <main>
+      <!-- Topbar -->
+      <%- include('../auth-includes/topbar'); %> 
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Card -->
+        <article class="card card-cascade narrower">
+          <!-- Card heading -->
+          <section class="view gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-center align-items-center">
+            <span class="white-text mx-3">Companies</span>
+          </section>
+          <br>
+          
+          <!-- Card content -->
+          <section class="px-4">
+            <!-- Table -->
+            <section class="table-wrapper">
+              <h6 class="recdrv light-green-text accent-3">
+                Ongoing Recruitment Drives
+              </h6>
+              <br>
+              <table class="table table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th>Company</th>
+                    <th>Arrived on</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>Infosys</td>
+                    <td>01-04-2022</td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-outline-indigo darken-4">Details</button>
+                      </a>
+                    </td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-red accent-3" data-toggle="modal" data-target="#profileModal">
+                          Eligibility
+                        </button>
+                      </a>
+                    </td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-light-green accent-3" data-toggle="modal" data-target="#profileModal">
+                          Apply
+                        </button>
+                      </a>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Odessa</td>
+                    <td>30-03-2022</td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-outline-indigo darken-4">Details</button>
+                      </a>
+                    </td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-red accent-3" data-toggle="modal" data-target="#profileModal">
+                          Eligibility
+                        </button>
+                      </a>
+                    </td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-light-green accent-3" data-toggle="modal" data-target="#profileModal">
+                          Apply
+                        </button>
+                      </a>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Virtusa</td>
+                    <td>25-03-2022</td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-outline-indigo darken-4">Details</button>
+                      </a>
+                    </td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-red accent-3" data-toggle="modal" data-target="#profileModal">
+                          Eligibility
+                        </button>
+                      </a>
+                    </td>
+                    <td>
+                      <button class="restrict btn btn-outline-light-green darken-4">
+                        Ongoing
+                      </button>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>E&Y GDS</td>
+                    <td>22-03-2022</td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-outline-indigo darken-4">Details</button>
+                      </a>
+                    </td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-red accent-3" data-toggle="modal" data-target="#profileModal">
+                          Eligibility
+                        </button>
+                      </a>
+                    </td>
+                    <td>
+                      <button class="restrict btn btn-outline-light-green darken-4">
+                        Ongoing
+                      </button>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+
+            <hr class="my-0">
+          </section>
+          <br><br><br>
+
+          <!-- Card content 2 -->
+          <section class="px-4">
+            <!-- Table -->
+            <section class="table-wrapper">
+              <h6 class="recdrv grey-text accent-3">
+                Past Recruitment Drives
+              </h6>
+              <br>
+              <table class="table table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th>Company</th>
+                    <th>Arrived on</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>Cognizant</td>
+                    <td>03-03-2022</td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-outline-indigo darken-4">Details</button>
+                      </a>
+                    </td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-light-blue accent-3" data-toggle="modal" data-target="#profileModal">
+                          Selects
+                        </button>
+                      </a>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Thoughtworks</td>
+                    <td>01-03-2022</td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-outline-indigo darken-4">Details</button>
+                      </a>
+                    </td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-light-blue accent-3" data-toggle="modal" data-target="#profileModal">
+                          Selects
+                        </button>
+                      </a>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Microsoft</td>
+                    <td>25-02-2022</td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-outline-indigo darken-4">Details</button>
+                      </a>
+                    </td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-light-blue accent-3" data-toggle="modal" data-target="#profileModal">
+                          Selects
+                        </button>
+                      </a>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Cloudkaptaan</td>
+                    <td>18-02-2022</td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-outline-indigo darken-4">Details</button>
+                      </a>
+                    </td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-light-blue accent-3" data-toggle="modal" data-target="#profileModal">
+                          Selects
+                        </button>
+                      </a>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Accenture</td>
+                    <td>10-02-2022</td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-outline-indigo darken-4">Details</button>
+                      </a>
+                    </td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-light-blue accent-3" data-toggle="modal" data-target="#profileModal">
+                          Selects
+                        </button>
+                      </a>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Accolite</td>
+                    <td>03-02-2022</td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-outline-indigo darken-4">Details</button>
+                      </a>
+                    </td>
+                    <td>
+                      <a href="#">
+                        <button class="btn btn-light-blue accent-3" data-toggle="modal" data-target="#profileModal">
+                          Selects
+                        </button>
+                      </a>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+
+            <hr class="my-0">
+          </section>
+
+        </article>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Bootstrap dependencies -->
+  <!-- First jQuery, then Popper.js and lastly Bootstrap JS -->
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="js/mdb.min.js"></script>
+  <!-- Custom script -->
+  <script src="./js/scripts.js"></script>
+</body>
+
+</html>
