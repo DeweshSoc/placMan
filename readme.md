@@ -11,3 +11,4 @@ Steps for setup:
 `MONGODB_URI="a mongodb uri string"` on two seperate lines
 10) Then ask me personally for mongoDB URI (you can also create your own using your own database). You need to put the actual MongoDB uri within the above string.
 11) After that use `nodemon app.js` Everything should run fine.
+12) To login into student account use - Name Dewesh, Roll 13000318103, Key Steel@1234.
