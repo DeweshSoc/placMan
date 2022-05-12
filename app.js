@@ -79,32 +79,12 @@ Record.find({})
     }
     return records;
   })
-  .then((records) => {
-    return Student.findOne({ roll: "13000318103" }).then((stud) => {
-      if (!stud) {
-        bcrypt.hash("Steel@1234", 12)
-        .then((hashedPassword) => {
-          const student1 = new Student({
-            name: "Dewesh Jha",
-            roll: "13000318103",
-            password: hashedPassword,
-            address: "Kadma, Jamshedpur",
-            cgpa: 9,
-            semCgpa: [1, 2, 3, 4, 5],
-            photoId: "1234",
-          });
-          return student1.save();
-        });
-      }else{
-          return stud;
-      }
-    });
-  })
-  .then(student => {
+  .then(records => {
     app.use("/home", homeRoutes);
     app.use("/student", studentRoutes);
     app.use((error, req, res, next) => {
       console.log(error);
+      console.log("In main error handling middleware!");
       res.status(error.setHttpStatusCode);
       res.render("error", {
         msg: error.message,

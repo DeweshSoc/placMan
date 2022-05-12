@@ -1,8 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Roboto+Slab:wght@300;400;600;700&display=swap');
+
 html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   background-color: rgb(241, 241, 241);
+  font-family: 'Roboto Slab',serif;
+}
+
+.secondary-gradient{
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right, rgba(161, 140, 209, 0.9), rgba(251, 194, 235, 0.9));
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right, rgba(161, 140, 209, 0.9), rgba(251, 194, 235, 0.9))
 }
 
 /* Global */
@@ -34,7 +46,7 @@ html {
 }
 
 #sidebar .navbar-header .navbar-brand {
-  font-family: lobster;
+  font-family: 'Montserrat',sans-serif;
 }
 
 #sidebar .navbar-nav {
@@ -72,7 +84,7 @@ main {
   display: grid;
   grid-template-areas: "topbar"
                        "content";
-  background-color: rgb(241, 241, 241);
+  background-color: rgba(241, 241, 241, 0.857);
 }
 
 /* Topbar */

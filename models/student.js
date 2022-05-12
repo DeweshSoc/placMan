@@ -13,11 +13,23 @@ const studentSchema = new Schema({
   },
   password:{
       type: String,
-      requires: true
+      required: true
+  },
+  dob:{
+      type: Date,
+      required:true
+  },
+  homeInfo:{
+      type: {parentName1:String, parentName2:String, occupation1: String, occupation2:String},
+      required:true
   },
   address:{
       type: String,
       required: true
+  },
+  branch:{
+      type:String,
+      required: true,
   },
   cgpa:{
       type: Number,
@@ -27,8 +39,28 @@ const studentSchema = new Schema({
       type:[Number],
       required: true
   },
-  photoId:{
-      type: String,
+  passoutYr:{
+      type:String,
+      required:true
+  },
+  skills:{
+      type:[String],
+      required:true
+  },
+  metricMarks:{
+      type:Number,
+      required:true
+  },
+  hscMarks:{
+      type:Number,
+      required:true
+  },
+  email:{
+      type:String,
+      required:true
+  },
+  phone:{
+      type:String,
       required:true
   },
   placed: Boolean,
@@ -38,3 +70,4 @@ const studentSchema = new Schema({
 const Student = mongoose.model("Student", studentSchema);
 
 module.exports = Student;
+

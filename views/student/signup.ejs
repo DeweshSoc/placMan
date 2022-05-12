@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlacMan</title>
+    <script src="/js/student/signup.js" defer></script>
+</head>
+<body>
+    
+
+    <div id="content" class="content">
+        <h1>PlacMan : a placement mangement service</h1>
+
+    <form action="/student/signup" method="POST" enctype="multipart/form-data">
+
+        <input type="text" name="studentName" placeholder="Name" required>
+        <input type="text" name="studentRoll" placeholder="Roll no" required>
+        <input type="password" name="studentPassword" placeholder="Your Key" required>
+        <input type="email" name="studentEmail" placeholder="Your email" required>
+        <input type="tel" name="studentPhone" placeholder="your number" required>
+        <input type="date" name="studentDob" placeholder="Your date of birth" required>
+        <input type="text" name="studentAddress" placeholder="Your permanent address" required>
+        <input type="text" name="studentBranch" placeholder="Your branch/discipline" required>
+        <input type="text" name="studentMetric" placeholder="Your 10th percentage">
+        <input type="text" name="studentHsc" placeholder="Your 12th percentage">
+        <input type="text" name="studentCgpa" placeholder="Your overall cgpa till date" required>
+        <input type="text" name="studentCgpaSem1" placeholder="1st sem cgpa">
+        <input type="text" name="studentCgpaSem2" placeholder="2nd sem cgpa">
+        <input type="text" name="studentCgpaSem3" placeholder="3rd sem cgpa">
+        <input type="text" name="studentCgpaSem4" placeholder="4th sem cgpa">
+        <input type="text" name="studentCgpaSem5" placeholder="5th sem cgpa">
+        <input type="text" name="studentCgpaSem6" placeholder="6th sem cgpa">
+        <input type="text" name="studentCgpaSem7" placeholder="7th sem cgpa">
+        <input type="text" name="studentCgpaSem8" placeholder="8th sem cgpa">
+        <input type="text" name="studentPassoutYr" placeholder="Your passout year" required>
+        <input type="text" name="studentParent1" placeholder="Your first parent's full name" required>
+        <input type="text" name="studentParentOcp1" placeholder="Your first parent's occupation" required>
+        <input type="text" name="studentParent2" placeholder="Your second parent's full name">
+        <input type="text" name="studentParentOcp2" placeholder="Your second parent's occupation">
+        <input type="hidden" id="count" name="skillCount" value="1">
+        <div class="container" id="container">
+            <input type="text" name="studentSkill1" placeholder="Skill 1" required>
+        </div>
+        <a class="btn btn-sm btn-primary" href="#" id="add-skill-btn">Add more skill</a>
+        <input type="submit" value="Submit">
+    </form>
+    </div>
+
+</body>
+</html>
