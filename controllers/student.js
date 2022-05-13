@@ -1,13 +1,10 @@
-const crypto = require("crypto");
-
 const bcrypt = require("bcryptjs");
 
 const Student = require("../models/student");
 const Record = require("../models/record");
-const { set } = require("mongoose");
 
 exports.getSignup=(req,res,next)=>{
-  if (req.session.isLoggedIn) {
+  if (req.session.isStudentLoggedIn) {
     return res.redirect("/student/home");
   }
   res.render("student/signup");
@@ -40,6 +37,7 @@ exports.postSignup=(req,res,next)=>{
   const hsc = req.body.studentHsc;
   const email = req.body.studentEmail;
   const phone = req.body.studentPhone;
+  const gender = req.body.studentGender;
 
   console.log(skills);
 
@@ -84,7 +82,8 @@ exports.postSignup=(req,res,next)=>{
         metricMarks:metric,
         hscMarks:hsc,
         email:email,
-        phone:phone
+        phone:phone,
+        gender:gender
       });
       return newStud.save();
     })
@@ -98,7 +97,10 @@ exports.postSignup=(req,res,next)=>{
   })
   .catch(err=>{
     console.log(err);
-    const responseMsg = err.message;
+    const responseMsg = {
+      message: err.message,
+      redirectRoute: "/home",
+    };
     res.status(500);
     res.send(JSON.stringify(responseMsg));
   });
@@ -107,7 +109,7 @@ exports.postSignup=(req,res,next)=>{
 
 
 exports.getLogin = (req, res) => {
-  if (req.session.isLoggedIn) {
+  if (req.session.isStudentLoggedIn) {
     return res.redirect("/student/home");
   }
   res.render("student/login");
@@ -122,10 +124,10 @@ exports.postLogin = (req, res,next) => {
   Student.findOne({ roll: roll })
   .then((student) => {
     if (student) {
-      bcrypt.compare(password, student.password)
+      return bcrypt.compare(password, student.password)
       .then((doMatch) => {
         if (doMatch) {
-          req.session.isLoggedIn = true;
+          req.session.isStudentLoggedIn = true;
           req.session.student = student;
           return req.session.save(err => {
             res.redirect("/student/home");
@@ -148,7 +150,7 @@ exports.postLogin = (req, res,next) => {
 };
 
 exports.getStudentHome=(req,res,next)=>{
-  if(req.session.isLoggedIn){
+  if(req.session.isStudentLoggedIn){
     const id = req.session.student._id;
     Student.findOne({_id:id})
     .then(student=>{
@@ -169,7 +171,7 @@ exports.getStudentHome=(req,res,next)=>{
         return res.render("student/dashboard",{
           student:student,
           dob:dt.toDateString(),
-          isLoggedIn:req.session.isLoggedIn,
+          isStudentLoggedIn:req.session.isStudentLoggedIn,
           mode:"student",
           previousYears:years
         });
@@ -185,7 +187,7 @@ exports.getStudentHome=(req,res,next)=>{
 };
 
 exports.getRecords=(req,res,next)=>{
-  if(req.session.isLoggedIn){
+  if(req.session.isStudentLoggedIn){
     const year = req.params.year;
     console.log(year);
     Record.findOne({year:year})
@@ -200,7 +202,10 @@ exports.getRecords=(req,res,next)=>{
     })
     .catch(err=>{
       console.log(err);
-      const responseMsg = err.message;
+      const responseMsg = {
+        message: err.message,
+        redirectRoute: "/student/home",
+      };
       res.status(500);
       res.send(JSON.stringify(responseMsg));
     });
@@ -208,7 +213,7 @@ exports.getRecords=(req,res,next)=>{
 }
 
 exports.getEditForm = (req,res,next)=>{
-  if(req.session.isLoggedIn){
+  if(req.session.isStudentLoggedIn){
     const roll = req.params.roll;
     console.log(roll);
     Student.findOne({roll:roll},{password:0})
@@ -222,7 +227,10 @@ exports.getEditForm = (req,res,next)=>{
     })
     .catch(err=>{
       console.log(err);
-      const responseMsg = err.message;
+      const responseMsg = {
+        message: err.message,
+        redirectRoute: "/student/home",
+      };
       res.status(500);
       res.send(JSON.stringify(responseMsg));
     });
@@ -230,7 +238,7 @@ exports.getEditForm = (req,res,next)=>{
 }
 
 exports.postEditForm = (req,res,next)=>{
-  if(req.session.isLoggedIn){
+  if(req.session.isStudentLoggedIn){
     console.log(req.body);
     const roll = req.params.roll;
     console.log(roll);
@@ -274,7 +282,10 @@ exports.postEditForm = (req,res,next)=>{
     })
     .catch(err=>{
       console.log(err);
-      const responseMsg = err.message;
+      const responseMsg = {
+        message:err.message,
+        redirectRoute : "/student/home"
+      };
       res.status(500);
       res.send(JSON.stringify(responseMsg));
     })
@@ -282,7 +293,7 @@ exports.postEditForm = (req,res,next)=>{
 }
 
 exports.postSkillAdd=(req,res,next)=>{
-  if(req.session.isLoggedIn){
+  if(req.session.isStudentLoggedIn){
     console.log(req.body);
     const roll = req.params.roll;
     Student.findOne({roll:roll})
@@ -307,7 +318,10 @@ exports.postSkillAdd=(req,res,next)=>{
     })
     .catch(err=>{
       console.log(err);
-      const responseMsg = err.message;
+      const responseMsg = {
+        message: err.message,
+        redirectRoute: "/student/home",
+      };
       res.status(500);
       res.send(JSON.stringify(responseMsg));
     })
@@ -315,7 +329,7 @@ exports.postSkillAdd=(req,res,next)=>{
 }
 
 exports.getSkillDel = (req, res, next) => {
-  if (req.session.isLoggedIn) {
+  if (req.session.isStudentLoggedIn) {
     const roll = req.params.roll;
     Student.findOne({ roll: roll })
       .then((student) => {
@@ -329,7 +343,10 @@ exports.getSkillDel = (req, res, next) => {
       })
       .catch((err) => {
         console.log(err);
-        const responseMsg = err.message;
+        const responseMsg = {
+          message: err.message,
+          redirectRoute: "/student/home",
+        };
         res.status(500);
         res.send(JSON.stringify(responseMsg));
       });
@@ -337,7 +354,7 @@ exports.getSkillDel = (req, res, next) => {
 };
 
 exports.postSkillDel=(req,res,next)=>{
-  if (req.session.isLoggedIn) {
+  if (req.session.isStudentLoggedIn) {
     console.log(req.body);
     const roll = req.params.roll;
     Student.findOne({ roll: roll })
@@ -366,7 +383,10 @@ exports.postSkillDel=(req,res,next)=>{
       })
       .catch((err) => {
         console.log(err);
-        const responseMsg = err.message;
+        const responseMsg = {
+          message: err.message,
+          redirectRoute: "/student/home",
+        };
         res.status(500);
         res.send(JSON.stringify(responseMsg));
       });

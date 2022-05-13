@@ -52,19 +52,19 @@
     </nav>
 
     <div id="content" class="content">
-      <h1 class="big-heading">Student login</h1>
+      <h1 class="big-heading">Teacher login</h1>
       <h4 class="subtitle">Fill in your details.</h4>
 
       <form
         class="w-75"
-        action="/student/login"
+        action="/teacher/login"
         method="POST"
         enctype="multipart/form-data"
       >
-        <input class="form-control mb-2" type="text" name="studentName" placeholder="Name">
-    <input class="form-control mb-2" type="text" name="studentRoll" placeholder="Roll no">
-    <input class="form-control mb-2" type="password" name="studentPassword" placeholder="Your Key">
-
+       
+    <input class="form-control mb-2" type="text" name="teacherName" placeholder="Name">
+    <input class="form-control mb-2" type="text" name="teacherUid" placeholder="UID">
+    <input class="form-control mb-2" type="password" name="teacherPassword" placeholder="Your Key">
 
         <input
           class="btn btn-lg btn-secondary d-block mx-auto my-4"
@@ -90,3 +90,12 @@
   </body>
 </html>
 
+
+<!-- <form action="/teacher/login" method="POST" enctype="multipart/form-data">
+
+    <input type="text" name="teacherName" placeholder="Name">
+    <input type="text" name="teacherUid" placeholder="UID">
+    <input type="password" name="teacherPassword" placeholder="Your Key">
+
+    <input type="submit" value="Submit">
+</form> -->

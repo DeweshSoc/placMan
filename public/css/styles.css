@@ -8,6 +8,12 @@ html {
   font-family: 'Roboto Slab',serif;
 }
 
+body{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .secondary-gradient{
 
   /* Chrome 10-25, Safari 5.1-6 */
@@ -23,6 +29,18 @@ html {
   grid-template-columns: 270px 1fr;
   grid-template-areas: "sidebar main";
   min-width: 300px;
+}
+
+
+/* navbar */
+
+.navbar-brand{
+  text-decoration: none;
+  font-family: "Montserrat",sans-serif;
+  color: #ebedf2;
+}
+.navbar-brand:hover{
+  color: #ccc;
 }
 
 /* Sidebar */
@@ -126,6 +144,38 @@ main {
   flex-direction: column;
   align-items: center;
   width: 100%;
+}
+
+.update-info{
+  width: 60%;
+  text-align: center;
+}
+
+.update-info a{
+  color: #22738e;
+}
+.update-info p{
+  padding: 2%;
+}
+
+.big-heading{
+  font-family: "Montserrat",sans-serif;
+  font-size: 5rem;
+  font-weight: 700;
+}
+
+.subtitle{
+  font-family: "Roboto Slab", serif;
+}
+
+
+.btn a{
+  text-decoration: none;
+  color: #ebedf2;
+}
+
+footer{
+  margin-top: auto;
 }
 
 /* Cards styling */

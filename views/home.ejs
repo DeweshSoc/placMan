@@ -5,17 +5,70 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlacMan</title>
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script defer src="/js/fontawesome-all.min.js"></script>
+    <link rel="stylesheet" href="/css/mdb.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+
 </head>
 <body>
-    <h1>PlacMan : a placement mangement service</h1>
-    
-    <ul>
-        <li><a href="/student/signup">Student SignUp</a></li>
-        <li><a href="/student/login">Student login</a></li>
-        <li><a href="/admin/login">Admin login</a></li>
-        <li><a href="/teacher/login">Teacher login</a></li>
-        <li><a href="/company/login">Company login</a></li>
-    </ul>
 
+    <nav id="topbar" class="navbar navbar-expand-md sticky-top">
+        <!-- sidebar toggle button -->
+        <button id="topbar-toggler" class="navbar-toggler" type="button" data-toggle="collapse">
+          <span class="fas fa-align-left"></span>
+        </button>
+        <!-- topbar items toggle button -->
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#topbar-items">
+          <span class="fas fa-ellipsis-v"></span>
+        </button>
+        <!-- topbar items -->
+        <div class="navbar-collapse collapse" id="topbar-items">
+            <div class="container">
+                <a class="navbar-brand" href="/home">
+                    <img src="/img/cap.png" alt="PlacMan Logo" loading="lazy"/>
+                    PLACMAN
+                </a>
+            </div>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link waves-effect waves-light" href="#">
+                <i class="fa fa-envelope"></i>
+                <span>Contact</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+    <div class="content" id="content">
+        <h1 class="big-heading"> PLACMAN</h1>
+        <h4 class="subtitle">a placement management system for professional courses</h4>
+        <div class="update-info">
+            <p class="alert-secondary">This centralised system can be used to automate, digitize and reduce manual work.  It can be used by students, faculty members, company representatives to coordinate and smoothen the placement procedure. </p>
+            <p class="alert-info">Made by students of ECE department, TMSL under guidance of <a class="text-decoration-underline" href="mailto:tuktuki.rakshit@gmail.com">Prof. Tuktuki Rakshit Ghosh</a></p>
+            NEXT UPDATE : 17/05/2022
+
+        </div>
+        <ul class="m-4 p-0">
+            <li class="btn btn-secondary btn-lg"><a href="/student/signup">Student SignUp</a></li>
+            <li class="btn btn-secondary btn-lg"><a href="/student/login">Student login</a></li>
+            <li class="btn btn-secondary btn-lg"><a href="/teacher/signup">Teacher Signup</a></li>
+            <li class="btn btn-secondary btn-lg"><a href="/teacher/login">Teacher login</a></li>
+            <li class="btn btn-secondary btn-lg"><a href="#">Company login</a></li>
+        </ul>
+    </div>
+
+    <footer class="text-center text-white" style="background-color: #f1f1f1;">
+
+  <!-- Copyright -->
+  <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2022 Copyright:
+    <a class="text-dark" href="#">Dewesh Jha</a>
+  </div>
+  <!-- Copyright -->
+</footer>
 </body>
 </html>

@@ -1,52 +1,296 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PlacMan</title>
+
+    <link rel="stylesheet" href="/css/normalize.css" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <script defer src="/js/fontawesome-all.min.js"></script>
+    <link rel="stylesheet" href="/css/mdb.min.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+
     <script src="/js/student/signup.js" defer></script>
-</head>
-<body>
-    
+  </head>
+  <body>
+    <nav id="topbar" class="navbar navbar-expand-md sticky-top">
+      <!-- sidebar toggle button -->
+      <button
+        id="topbar-toggler"
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+      >
+        <span class="fas fa-align-left"></span>
+      </button>
+      <!-- topbar items toggle button -->
+      <button
+        class="navbar-toggler collapsed"
+        type="button"
+        data-toggle="collapse"
+        data-target="#topbar-items"
+      >
+        <span class="fas fa-ellipsis-v"></span>
+      </button>
+      <!-- topbar items -->
+      <div class="navbar-collapse collapse" id="topbar-items">
+        <div class="container">
+          <a class="navbar-brand" href="/home">
+            <img src="/img/cap.png" alt="PlacMan Logo" loading="lazy" />
+            PLACMAN
+          </a>
+        </div>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link waves-effect waves-light" href="#!">
+              <i class="fa fa-envelope"></i>
+              <span>Contact</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
     <div id="content" class="content">
-        <h1>PlacMan : a placement mangement service</h1>
+      <h1 class="big-heading">Student signup</h1>
+      <h4 class="subtitle">Fill in your details.</h4>
 
-    <form action="/student/signup" method="POST" enctype="multipart/form-data">
-
-        <input type="text" name="studentName" placeholder="Name" required>
-        <input type="text" name="studentRoll" placeholder="Roll no" required>
-        <input type="password" name="studentPassword" placeholder="Your Key" required>
-        <input type="email" name="studentEmail" placeholder="Your email" required>
-        <input type="tel" name="studentPhone" placeholder="your number" required>
-        <input type="date" name="studentDob" placeholder="Your date of birth" required>
-        <input type="text" name="studentAddress" placeholder="Your permanent address" required>
-        <input type="text" name="studentBranch" placeholder="Your branch/discipline" required>
-        <input type="text" name="studentMetric" placeholder="Your 10th percentage">
-        <input type="text" name="studentHsc" placeholder="Your 12th percentage">
-        <input type="text" name="studentCgpa" placeholder="Your overall cgpa till date" required>
-        <input type="text" name="studentCgpaSem1" placeholder="1st sem cgpa">
-        <input type="text" name="studentCgpaSem2" placeholder="2nd sem cgpa">
-        <input type="text" name="studentCgpaSem3" placeholder="3rd sem cgpa">
-        <input type="text" name="studentCgpaSem4" placeholder="4th sem cgpa">
-        <input type="text" name="studentCgpaSem5" placeholder="5th sem cgpa">
-        <input type="text" name="studentCgpaSem6" placeholder="6th sem cgpa">
-        <input type="text" name="studentCgpaSem7" placeholder="7th sem cgpa">
-        <input type="text" name="studentCgpaSem8" placeholder="8th sem cgpa">
-        <input type="text" name="studentPassoutYr" placeholder="Your passout year" required>
-        <input type="text" name="studentParent1" placeholder="Your first parent's full name" required>
-        <input type="text" name="studentParentOcp1" placeholder="Your first parent's occupation" required>
-        <input type="text" name="studentParent2" placeholder="Your second parent's full name">
-        <input type="text" name="studentParentOcp2" placeholder="Your second parent's occupation">
-        <input type="hidden" id="count" name="skillCount" value="1">
-        <div class="container" id="container">
-            <input type="text" name="studentSkill1" placeholder="Skill 1" required>
+      <form
+        class="w-75"
+        action="/student/signup"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <p class="mb-1">General info</p>
+        <div class="form-group">
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentName"
+            placeholder="Name"
+            required
+          />
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentRoll"
+            placeholder="Roll no"
+            required
+          />
+          <input
+            class="form-control mb-2"
+            type="password"
+            name="studentPassword"
+            placeholder="Your Key"
+            required
+          />
+          <select class="form-select" name="studentGender" id="gender">
+            <option selected>Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Others">Others</option>
+          </select>
         </div>
-        <a class="btn btn-sm btn-primary" href="#" id="add-skill-btn">Add more skill</a>
-        <input type="submit" value="Submit">
-    </form>
-    </div>
+        <p class="mb-1">Contact info</p>
+        <div class="form-group">
+          <input
+            class="form-control mb-2"
+            type="email"
+            name="studentEmail"
+            placeholder="Your email"
+            required
+          />
+          <input
+            class="form-control mb-2"
+            type="tel"
+            name="studentPhone"
+            placeholder="your number"
+            required
+          />
+          <input
+            class="form-control mb-2"
+            type="date"
+            name="studentDob"
+            placeholder="Your date of birth"
+            required
+          />
+        </div>
+        <p class="mb-1">Academic info</p>
+        <div class="form-group">
+          <select
+            class="form-select form-control"
+            name="studentBranch"
+            id="studentBranch"
+          >
+            <option selected>Select branch</option>
+            <option value="Electrical Eng">Electrical Eng</option>
+            <option value="Electronics and Communication Eng">
+              Electronics and Communication Eng
+            </option>
+            <option value="Computer Science Eng">Computer Science Eng</option>
+            <option value="Information Technology">
+              Information Technology
+            </option>
+            <option value="Civil Eng">Civil Eng</option>
+            <option value="Mechanical Eng">Mechanical Eng</option>
+          </select>
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentMetric"
+            placeholder="Your 10th percentage"
+          />
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentHsc"
+            placeholder="Your 12th percentage"
+          />
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentCgpa"
+            placeholder="Your overall cgpa till date"
+            required
+          />
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentCgpaSem1"
+            placeholder="1st sem cgpa"
+          />
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentCgpaSem2"
+            placeholder="2nd sem cgpa"
+          />
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentCgpaSem3"
+            placeholder="3rd sem cgpa"
+          />
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentCgpaSem4"
+            placeholder="4th sem cgpa"
+          />
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentCgpaSem5"
+            placeholder="5th sem cgpa"
+          />
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentCgpaSem6"
+            placeholder="6th sem cgpa"
+          />
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentCgpaSem7"
+            placeholder="7th sem cgpa"
+          />
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentCgpaSem8"
+            placeholder="8th sem cgpa"
+          />
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentPassoutYr"
+            placeholder="Your passout year"
+            required
+          />
+        </div>
+        <p class="mb-1">Residential info</p>
+        <div class="form-group">
+            <input
+                class="form-control mb-2"
+                type="text"
+                name="studentParent1"
+                placeholder="Your first parent's full name"
+                required
+            />
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentAddress"
+            placeholder="Your permanent address"
+            required
+          />
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentParentOcp1"
+            placeholder="Your first parent's occupation"
+            required
+          />
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentParent2"
+            placeholder="Your second parent's full name"
+          />
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentParentOcp2"
+            placeholder="Your second parent's occupation"
+          />
+          <input
+            class="form-control mb-2"
+            type="hidden"
+            id="count"
+            name="skillCount"
+            value="1"
+          />
+        </div>
+        <p class="mb-1">Skills info</p>
+        <div class="container w-100" id="container">
+          <input
+            class="form-control mb-2"
+            type="text"
+            name="studentSkill1"
+            placeholder="Skill 1"
+            required
+          />
+        </div>
+        <a
+          class="my-3 mx-auto btn btn-sm btn-primary"
+          href="#!"
+          id="add-skill-btn"
+          >Add more skill</a
+        >
 
-</body>
+        <input
+          class="btn btn-lg btn-secondary d-block mx-auto my-4"
+          type="submit"
+          value="Submit"
+        />
+      </form>
+    </div>
+    <footer
+      class="text-center text-white mt-4"
+      style="background-color: #f1f1f1"
+    >
+      <!-- Copyright -->
+      <div
+        class="text-center text-dark p-3"
+        style="background-color: rgba(0, 0, 0, 0.2)"
+      >
+        © 2022 Copyright:
+        <a class="text-dark" href="#!">Dewesh Jha</a>
+      </div>
+      <!-- Copyright -->
+    </footer>
+  </body>
 </html>

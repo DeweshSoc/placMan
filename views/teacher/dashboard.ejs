@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PlacMan | A placement Management system</title>
+
+  <!-- Normalize browser inconsistencies -->
+  <link rel="stylesheet" href="/css/normalize.css">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <script defer src="/js/fontawesome-all.min.js"></script>
+  <!-- MD Bootstrap -->
+  <!-- Custom stylesheet -->
+  <link rel="stylesheet" href="/css/mdb.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <script src="/js/teacher/sidebar.js" defer></script>
+  <style>
+    /* Scrollbar styling */
+
+    body::-webkit-scrollbar {
+      width: 9px;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: rgba(29, 17, 17, 0.788);
+    }
+
+    body::-webkit-scrollbar-track {
+      background-color: rgb(230, 223, 223);
+      border-radius: 10px;
+    }
+
+    /* Profile Modal */
+
+    .card.profile-card {
+      width: 100%;
+      margin: 0;
+    }
+
+    #profileModal .modal-content,
+    #profileModal .modal-content .modal-body,
+    #profileModal .modal-content .modal-body .card.profile-card {
+      border-radius: 10px;
+    }
+
+    #profileModal .modal-content .modal-body .card.profile-card img {
+      border-radius: 10px 10px 0 0;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Wrapper stretches to the whole viewport height -->
+  <div class="wrapper">
+    <!-- Sidebar -->
+    <%-include('includes/sidebar');%>
+
+    <!-- Main -->
+    <main>
+      <!-- Topbar -->
+      <%-include('includes/topbar');%> 
+      <!--  -->
+
+
+      <template id="record-template">
+        <article class="card card-cascade narrower">
+          <!-- Card heading -->
+          <section class="secondary-gradient py-3 mb-4 d-flex justify-content-center align-items-center">
+            <span class="text-dark mx-3" id="recordYear">Placement Details - </span>
+          </section>
+
+          <!-- Card content -->
+          <section class="px-4">
+            <!-- Table -->
+            <section class="table-wrapper">
+              <table class="table table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th class="th-md">University Roll No.</th>
+                    <th class="th-md">Student Name</th>
+                    <th class="th-md">Placed at</th>
+                  </tr>
+                </thead>
+
+                <tbody id="recordRows">
+                 
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  
+                </tbody>
+                
+              </table>
+            </section>
+
+            <hr class="my-0">
+
+         
+          </section>
+        </article></template>
+
+      <template id="edit-form-template">
+          <p class="subtitle"> Change details for updation</p>
+            <form id="edit-form" action="/teacher/signup" method="POST" enctype="multipart/form-data">
+          
+              <input class="form-control mb-2" type="text" id="teacherName" name="teacherName" placeholder="Name" required>
+              <input class="form-control mb-2" type="email" id="teacherEmail" name="teacherEmail" placeholder="Your email" required>
+              <input class="form-control mb-2" type="tel" id="teacherPhone" name="teacherPhone" placeholder="your number" required>
+              <select class="form-control form-select mb-2" name="teacherDept" id="teacherDept">
+                <option value="Electrical Eng">Electrical Eng</option>
+                <option value="Electronics and Communication Eng">Electronics and Communication Eng</option>
+                <option value="Computer Science Eng"> Computer Science Eng</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="Civil Eng">Civil Eng</option>
+                <option value="Mechanical Eng">Mechanical Eng</option>
+              </select>
+              <input class="btn btn-secondary btn-lg mx-auto my-4" type="submit" value="Submit">
+          </form>
+      </template>  
+
+      <template id="skill-del-template">
+
+        <form id="skill-del-form">
+          <div>
+
+          </div>  
+          <input class="btn btn-danger" type="submit" value="Delete checked skills">
+        </form>
+
+      </template>
+
+      <input type="hidden" id="teacher-uid" value="<%=teacher.uid%>">
+
+      <!-- Content -->
+      <div class="content"  id="content">
+        <!-- First card -->
+
+
+        
+        <div class="card mb-3" style="max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <%if(teacher.gender=="Male"){%>
+                <img class="img-fluid rounded-start" src="/img/teacher-male.png" alt="student">
+                <% }else{ %>
+                  <img class="img-fluid rounded-start" src="/img/teacher-female.png" alt="student">
+              <% } %>  
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title"><%=teacher.name%></h5>
+                <p class="card-text">
+                  <%=teacher.department%>
+                  <br>
+                  UID : <%=teacher.uid%>
+                  <br>
+                  Email : <%= teacher.email %>  
+                  <br>
+                  Phone : <%=teacher.phone%>
+                  <br>
+                  Status : <%if(teacher.admin){%> Admin<% }else{ %>Coordinator<% } %>  
+                  <br>
+                </p>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <small class="text-muted">Mentor under <%=teacher.department%> department</small>
+        <article class="card card-cascade wider reverse my-4">
+         
+        </article>
+
+        <!-- Second card -->
+        <h3 class="m-4">Notices</h3>
+        <article class="card">
+          <section class="card-body">
+            <h6 class="text-success accent-3">
+              <i class="far fa-bell"></i>
+              Update
+            </h6>
+            <br>
+
+            <p class="card-text">
+              All unplaced students have to compulsorily sit for Cognizant and Tcs on 29th of June, 2021. You may also refer to the mail regrading this.
+            </p>
+          </section>
+          <section class="card-footer text-right">
+            <a href="#!"><button class="btn btn-success accent-3" data-toggle="modal" data-target="#profileModal">View email</button></a>
+          </section>
+        </article>
+        
+      </div>
+    </main>
+  </div>
+
+  <!-- Bootstrap dependencies -->
+  <!-- First jQuery, then Popper.js and lastly Bootstrap JS -->
+  <script src="/js/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="/js/mdb.min.js"></script>
+  <!-- Custom script -->
+  <script src="/js/scripts.js"></script>
+</body>
+
+</html>

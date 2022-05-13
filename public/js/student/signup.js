@@ -9,11 +9,16 @@ function addSkill(){
     inp.type = "text";
     inp.name=nm;
     inp.placeholder="Skill"+i;
+    inp.classList.add("form-control");
+    // inp.classList.add("form-control");
     console.log(inp);
     container.appendChild(inp);
     count.value = i;
 }
 addSkillBtn.addEventListener("click",addSkill);
+
+
+
 const content = document.getElementById("content");
 const frm = document.getElementsByTagName("form")[0];
 frm.addEventListener("submit",(e)=>{

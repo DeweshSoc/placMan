@@ -64,7 +64,7 @@
     <!-- Main -->
     <main>
       <!-- Topbar -->
-      <%-include('../auth-includes/topbar');%> 
+      <%-include('includes/topbar');%> 
       <!--  -->
 
 
@@ -108,31 +108,39 @@
         </article></template>
 
       <template id="edit-form-template">
+          <p class="subtitle"> Change the details for updation.</p>
             <form id="edit-form" action="/student/signup" method="POST" enctype="multipart/form-data">
 
-              <input type="text" id="studentName" name="studentName" placeholder="Name" required>
-              <input type="email" id="studentEmail" name="studentEmail" placeholder="Your email" required>
-              <input type="tel" id="studentPhone" name="studentPhone" placeholder="your number" required>
-              <input type="date" id="studentDob" name="studentDob" placeholder="Your date of birth" required>
-              <input type="text" id="studentAddress" name="studentAddress" placeholder="Your permanent address" required>
-              <input type="text" id="studentBranch" name="studentBranch" placeholder="Your branch/discipline" required>
-              <input type="text" id="studentMetric" name="studentMetric" placeholder="Your 10th percentage">
-              <input type="text" id="studentHsc" name="studentHsc" placeholder="Your 12th percentage">
-              <input type="text" id="studentCgpa" name="studentCgpa" placeholder="Your overall cgpa till date" required>
-              <input type="text" id="studentCgpaSem1" name="studentCgpaSem1" placeholder="1st sem cgpa">
-              <input type="text" id="studentCgpaSem2" name="studentCgpaSem2" placeholder="2nd sem cgpa">
-              <input type="text" id="studentCgpaSem3" name="studentCgpaSem3" placeholder="3rd sem cgpa">
-              <input type="text" id="studentCgpaSem4" name="studentCgpaSem4" placeholder="4th sem cgpa">
-              <input type="text" id="studentCgpaSem5" name="studentCgpaSem5" placeholder="5th sem cgpa">
-              <input type="text" id="studentCgpaSem6" name="studentCgpaSem6" placeholder="6th sem cgpa">
-              <input type="text" id="studentCgpaSem7" name="studentCgpaSem7" placeholder="7th sem cgpa">
-              <input type="text" id="studentCgpaSem8" name="studentCgpaSem8" placeholder="8th sem cgpa">
-              <input type="text" id="studentPassoutYr" name="studentPassoutYr" placeholder="Your passout year" required>
-              <input type="text" id="studentParent1" name="studentParent1" placeholder="Your first parent's full name" required>
-              <input type="text" id="studentParentOcp1" name="studentParentOcp1" placeholder="Your first parent's occupation" required>
-              <input type="text" id="studentParent2" name="studentParent2" placeholder="Your second parent's full name">
-              <input type="text" id="studentParentOcp2" name="studentParentOcp2" placeholder="Your second parent's occupation">
-              <input type="submit" value="Submit">
+              <input class="form-control mb-2"  type="text" id="studentName" name="studentName" placeholder="Name" required>
+              <input class="form-control mb-2" type="email" id="studentEmail" name="studentEmail" placeholder="Your email" required>
+              <input class="form-control mb-2" type="tel" id="studentPhone" name="studentPhone" placeholder="your number" required>
+              <input class="form-control mb-2" type="date" id="studentDob" name="studentDob" placeholder="Your date of birth" required>
+              <input class="form-control mb-2" type="text" id="studentAddress" name="studentAddress" placeholder="Your permanent address" required>
+              <select class="form-control mb-2 form-select" name="studentBranch" id="studentBranch">
+                <option value="Electrical Eng">Electrical Eng</option>
+                <option value="Electronics and Communication Eng">Electronics and Communication Eng</option>
+                <option value="Computer Science Eng"> Computer Science Eng</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="Civil Eng">Civil Eng</option>
+                <option value="Mechanical Eng">Mechanical Eng</option>
+              </select>
+              <input class="form-control mb-2" type="text" id="studentMetric" name="studentMetric" placeholder="Your 10th percentage">
+              <input class="form-control mb-2" type="text" id="studentHsc" name="studentHsc" placeholder="Your 12th percentage">
+              <input class="form-control mb-2" type="text" id="studentCgpa" name="studentCgpa" placeholder="Your overall cgpa till date" required>
+              <input class="form-control mb-2" type="text" id="studentCgpaSem1" name="studentCgpaSem1" placeholder="1st sem cgpa">
+              <input class="form-control mb-2" type="text" id="studentCgpaSem2" name="studentCgpaSem2" placeholder="2nd sem cgpa">
+              <input class="form-control mb-2" type="text" id="studentCgpaSem3" name="studentCgpaSem3" placeholder="3rd sem cgpa">
+              <input class="form-control mb-2" type="text" id="studentCgpaSem4" name="studentCgpaSem4" placeholder="4th sem cgpa">
+              <input class="form-control mb-2" type="text" id="studentCgpaSem5" name="studentCgpaSem5" placeholder="5th sem cgpa">
+              <input class="form-control mb-2" type="text" id="studentCgpaSem6" name="studentCgpaSem6" placeholder="6th sem cgpa">
+              <input class="form-control mb-2" type="text" id="studentCgpaSem7" name="studentCgpaSem7" placeholder="7th sem cgpa">
+              <input class="form-control mb-2" type="text" id="studentCgpaSem8" name="studentCgpaSem8" placeholder="8th sem cgpa">
+              <input class="form-control mb-2" type="text" id="studentPassoutYr" name="studentPassoutYr" placeholder="Your passout year" required>
+              <input class="form-control mb-2" type="text" id="studentParent1" name="studentParent1" placeholder="Your first parent's full name" required>
+              <input class="form-control mb-2" type="text" id="studentParentOcp1" name="studentParentOcp1" placeholder="Your first parent's occupation" required>
+              <input class="form-control mb-2" type="text" id="studentParent2" name="studentParent2" placeholder="Your second parent's full name">
+              <input class="form-control mb-2" type="text" id="studentParentOcp2" name="studentParentOcp2" placeholder="Your second parent's occupation">
+              <input class="btn btn-secondary btn-lg mx-auto my-4" type="submit" value="Submit">
           </form>
       </template>  
 
@@ -158,7 +166,11 @@
         <div class="card mb-3" style="max-width: 540px;">
           <div class="row g-0">
             <div class="col-md-4">
-              <img class="img-fluid rounded-start" src="/img/student.png" alt="student">
+              <%if(student.gender=="Male"){%>
+                <img class="img-fluid rounded-start" src="/img/student-male.png" alt="student">
+                <% }else{ %>
+                  <img class="img-fluid rounded-start" src="/img/student-female.png" alt="student">
+              <% } %>  
             </div>
             <div class="col-md-8">
               <div class="card-body">
