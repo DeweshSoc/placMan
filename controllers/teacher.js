@@ -1,99 +1,98 @@
 const bcrypt = require("bcryptjs");
 
-
 const Teacher = require("../models/teacher");
 const Record = require("../models/record");
+const Student = require("../models/student");
+const { find } = require("../models/teacher");
 
+exports.getSignup = (req, res, next) => {
+  if (req.session.isTeacherLoggedIn) {
+    return res.redirect("/teacher/home");
+  }
+  res.render("teacher/signup");
+};
 
-exports.getSignup = (req,res,next)=>{
-    if (req.session.isTeacherLoggedIn) {
-      return res.redirect("/teacher/home");
-    }
-    res.render("teacher/signup");
-}
-
-exports.postSignup = (req,res,next)=>{
-    console.log(req.body);
-    Teacher.findOne({ uid: req.body.teacherUid })
-      .then((teacher) => {
-        if (teacher) {
-          const err = new Error(
-            "This uid is already registered. Contact admin for changes."
-          );
-          err.setHttpStatusCode = 200;
-          throw err;
-        }
-        return bcrypt
-          .hash(req.body.teacherPassword, 12)
-          .then((hashedPassword) => {
-            const newTeacher = new Teacher({
-              name: req.body.teacherName,
-              uid: req.body.teacherUid,
-              password: hashedPassword,
-              department: req.body.teacherDept,
-              email: req.body.teacherEmail,
-              phone: req.body.teacherPhone,
-              gender:req.body.teacherGender,
-              admin:false
-            });
-            return newTeacher.save();
-          });
-      })
-      .then(teacher => {
-        const toSend = {
-          message: "New teacher Added!",
-          redirectRoute: "/teacher/login",
-        };
-        return res.send(JSON.stringify(toSend));
-      })
-      .catch(err => {
-        console.log(err);
-        const responseMsg = {
-          message: err.message,
-          redirectRoute: "/home",
-        };
-        res.status(500);
-        res.send(JSON.stringify(responseMsg));
-      });
-}
-
-exports.getLogin = (req,res,next)=>{
-    if (req.session.isTeacherLoggedIn) {
-      return res.redirect("/teacher/home");
-    }
-    res.render("teacher/login");
-}
-
-exports.postLogin = (req,res,next)=>{
-  const uid = req.body.teacherUid;
-  console.log("login request for"+ uid);
-  const password = req.body.teacherPassword;
-  Teacher.findOne({ uid: uid })
-  .then(teacher => {
-    if (teacher) {
-      return bcrypt.compare(password, teacher.password)
-      .then((doMatch) => {
-        if (doMatch) {
-          req.session.isTeacherLoggedIn = true;
-          req.session.teacher = teacher;
-          return req.session.save(err => {
-            res.redirect("/teacher/home");
-          });
-        }
-        const err = new Error("Invalid username or password!");
+exports.postSignup = (req, res, next) => {
+  console.log(req.body);
+  Teacher.findOne({ uid: req.body.teacherUid })
+    .then((teacher) => {
+      if (teacher) {
+        const err = new Error(
+          "This uid is already registered. Contact admin for changes."
+        );
         err.setHttpStatusCode = 200;
         throw err;
-      });
-    } else {
-      const err = new Error("Unrecognised roll no. Get registered first.");
-      err.setHttpStatusCode = 200;
-      throw err;
-    }
-  })
-  .catch(err=>{
-    console.log(err);
-    return next(err);
-  })
+      }
+      return bcrypt
+        .hash(req.body.teacherPassword, 12)
+        .then((hashedPassword) => {
+          const newTeacher = new Teacher({
+            name: req.body.teacherName,
+            uid: req.body.teacherUid,
+            password: hashedPassword,
+            department: req.body.teacherDept,
+            email: req.body.teacherEmail,
+            phone: req.body.teacherPhone,
+            gender: req.body.teacherGender,
+            admin: false,
+          });
+          return newTeacher.save();
+        });
+    })
+    .then((teacher) => {
+      const toSend = {
+        message: "New teacher Added!",
+        redirectRoute: "/teacher/login",
+      };
+      return res.send(JSON.stringify(toSend));
+    })
+    .catch((err) => {
+      console.log(err);
+      const responseMsg = {
+        message: err.message,
+        redirectRoute: "/home",
+      };
+      res.status(500);
+      res.send(JSON.stringify(responseMsg));
+    });
+};
+
+exports.getLogin = (req, res, next) => {
+  if (req.session.isTeacherLoggedIn) {
+    return res.redirect("/teacher/home");
+  }
+  res.render("teacher/login");
+};
+
+exports.postLogin = (req, res, next) => {
+  const uid = req.body.teacherUid;
+  console.log("login request for" + uid);
+  const password = req.body.teacherPassword;
+  Teacher.findOne({ uid: uid })
+    .then((teacher) => {
+      if (teacher) {
+        return bcrypt.compare(password, teacher.password).then((doMatch) => {
+          if (doMatch) {
+            req.session.isTeacherLoggedIn = true;
+            req.session.teacher = teacher;
+            return req.session.save((err) => {
+              res.redirect("/teacher/home");
+            });
+          }
+          const err = new Error("Invalid username or password!");
+          err.setHttpStatusCode = 200;
+          throw err;
+        });
+      } else {
+        const err = new Error("Unrecognised roll no. Get registered first.");
+        err.setHttpStatusCode = 200;
+        throw err;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      return next(err);
+    });
 };
 
 exports.getTeacherHome = (req, res, next) => {
@@ -161,7 +160,7 @@ exports.getEditForm = (req, res, next) => {
   if (req.session.isTeacherLoggedIn) {
     const uid = req.params.uid;
     // console.log(uid);
-    Teacher.findOne({ uid: uid }, { password: 0, gender:0 })
+    Teacher.findOne({ uid: uid }, { password: 0, gender: 0 })
       .then((teacher) => {
         if (!teacher) {
           const err = new Error("No such teacher found!");
@@ -219,6 +218,114 @@ exports.postEditForm = (req, res, next) => {
   }
 };
 
+exports.getStudent = (req, res, next) => {
+  if (req.session.isTeacherLoggedIn) {
+    const roll = req.params.roll;
+    console.log(roll);
+    if (roll == 0) {
+      Student.find({}, { password: 0, _id: 0, __v: 0 })
+        .then((students) => {
+          if (!students.length) {
+            const err = new Error("No students found!");
+            err.setHttpStatusCode = 200;
+            throw err;
+          }
+          res.send(JSON.stringify(students));
+        })
+        .catch((err) => {
+          console.log(err);
+          const responseMsg = {
+            message: err.message,
+            redirectRoute: "/teacher/home",
+          };
+          res.status(500);
+          res.send(JSON.stringify(responseMsg));
+        });
+    } else {
+      Student.findOne({ roll: roll },{password:0,_id:0, __v:0})
+        .then((student) => {
+          if (!student) {
+            const err = new Error("No student found!");
+            err.setHttpStatusCode = 200;
+            throw err;
+          }
+          res.send(JSON.stringify(student));
+        })
+        .catch((err) => {
+          console.log(err);
+          const responseMsg = {
+            message: err.message,
+            redirectRoute: "/teacher/home",
+          };
+          res.status(500);
+          res.send(JSON.stringify(responseMsg));
+        });
+    }
+  }
+};
+
+exports.postFilterStudents=(req,res,next)=>{
+  if(req.session.isTeacherLoggedIn){
+    const gender = req.body.gender;
+    const branch = req.body.branch;
+    const status = req.body.status;
+    const company = req.body.company;
+    console.log(gender,branch,status,company);
+    const placedQuery = (req.body.status=="Placed")?true:false;
+    const toSendStudents=[];
+    Student.find({})
+    .then(students=>{
+      console.log(students.length);
+      const genderFiltered =[];
+      if(gender!="Select gender"){
+        for(let i=0;i<students.length;i++){
+          if(students[i].gender==gender){
+            genderFiltered.push(students[i]);
+          }
+        }
+      }
+      const prev1 = (gender != "Select gender")?genderFiltered:students;
+      const branchFiltered=[];
+      if(branch!="Select branch"){
+        for (let i = 0; i < prev1.length; i++) {
+          if (prev1[i].branch == branch) {
+            branchFiltered.push(prev1[i]);
+          }
+        }
+      }
+      const prev2 = (branch != "Select branch")?branchFiltered:prev1;
+      const statusFiltered=[];
+      if(status!="Select status"){
+        for (let i = 0; i < prev2.length; i++) {
+          if (prev2[i].placed == placedQuery) {
+            statusFiltered.push(prev2[i]);
+          }
+        }
+      }
+      const prev3 = (status != "Select status") ? statusFiltered : prev2;
+      const companyFiltered=[];
+      for (let i = 0; i < prev3.length; i++) {
+        if (prev3[i].company == company) {
+          companyFiltered.push(prev3[i]);
+        }
+      }
+      const prev4 = (company!="Select company")?companyFiltered:prev3
+      return prev4;
+    })
+    .then(students=>{
+      res.send(JSON.stringify(students));
+    })
+    .catch(err=>{
+      console.log(err);
+      const responseMsg = {
+        message: err.message,
+        redirectRoute: "/teacher/home",
+      };
+      res.status(500);
+      res.send(JSON.stringify(responseMsg));
+    })
+  }
+}
 
 
 exports.logout = (req, res, next) => {

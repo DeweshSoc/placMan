@@ -11,6 +11,8 @@ router.get("/home",teacherController.getTeacherHome);
 router.get("/records/:year", teacherController.getRecords);
 router.get("/edit/:uid", teacherController.getEditForm);
 router.post("/edit/:uid", teacherController.postEditForm);
+router.get("/student/:roll", teacherController.getStudent);
+router.post("/filter",teacherController.postFilterStudents);
 router.get("/logout", teacherController.logout);
 module.exports = router;
 

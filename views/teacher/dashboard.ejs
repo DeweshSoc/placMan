@@ -126,16 +126,110 @@
           </form>
       </template>  
 
-      <template id="skill-del-template">
+      <template id="students-all-template">
+        <article class="card card-cascade narrower w-75">
+          <!-- Card heading -->
+          <section class="secondary-gradient py-3 mb-4 d-flex justify-content-center align-items-center">
+            <span class="text-dark mx-3">All students</span>
+          </section>
 
-        <form id="skill-del-form">
-          <div>
+          <!-- Card content -->
+          <section class="px-4">
+            <!-- Table -->
+            <section class="table-wrapper">
+              <table class="table table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th class="th-md">Roll No</th>
+                    <th class="th-md">Name</th>
+                    <th class="th-md">Status</th>
+                    <th class="th-md">Branch</th>
+                    <th class="th-md">Action</th>
+                    
 
-          </div>  
-          <input class="btn btn-danger" type="submit" value="Delete checked skills">
-        </form>
+                  </tr>
+                </thead>
 
-      </template>
+                <tbody id="studentRows">
+                 
+                  
+                </tbody>
+                
+              </table>
+            </section>
+
+            <hr class="my-0">
+
+         
+          </section>
+        </article></template>      
+    
+       <template id="student-template">
+        <article class="card card-cascade narrower w-75">
+          <!-- Card heading -->
+          <section class="secondary-gradient py-3 mb-4 d-flex justify-content-center align-items-center">
+            <span class="text-dark mx-3" id="studentName"> </span>
+          </section>
+
+          <!-- Card content -->
+          <section class="px-4">
+            <!-- Table -->
+            <section class="table-wrapper">
+              <table class="table table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th class="th-md">Description</th>
+                    <th class="th-md">Student Info</th>
+                    
+                  </tr>
+                </thead>
+
+                <tbody id="studentDataRows">
+                 
+                  
+                </tbody>
+                
+              </table>
+            </section>
+
+            <hr class="my-0">
+
+         
+          </section>
+        </article></template>  
+        
+        <template id="filter-form-template">
+          <form id="filter-form">
+            <select class="form-control form-select mb-2" name="gender" id="filter-gender">
+              <option selected>Select gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Others">Others</option>
+            </select>
+            <select class="form-control form-select mb-2" name="branch" id="filter-branch">
+                <option selected>Select branch</option>
+                <option value="Electrical Eng">Electrical Eng</option>
+                <option value="Electronics and Communication Eng">Electronics and Communication Eng</option>
+                <option value="Computer Science Eng"> Computer Science Eng</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="Civil Eng">Civil Eng</option>
+                <option value="Mechanical Eng">Mechanical Eng</option>
+              </select>
+              <select id="filter-status" name="status" class="form-control form-select mb-2">
+                <option selected>Select status</option>
+                <option value="Placed">Placed</option>
+                <option value="Unplaced">Unplaced</option>
+              </select>
+              <select id="filter-company" name="company" class="form-control form-select mb-2">
+                <option selected>Select company</option>
+                <option value="LTI">LTI</option>
+                <option value="TCS">TCS</option>
+                <option value="Cognizant">Cognizant</option>
+              </select>
+
+              <input type="submit" class="btn btn-lg btn-secondary" value="Submit">
+          </form>
+        </template>
 
       <input type="hidden" id="teacher-uid" value="<%=teacher.uid%>">
 
