@@ -5,8 +5,92 @@ const content = document.getElementById("content");
 const cmpSidebarBtn = document.getElementById("companyLink");
 cmpSidebarBtn.addEventListener("click",e=>{
     content.innerHTML = "<div class='spinner-border text-primary' role='status'><span class='visually-hidden'>Loading...</span></div>;"
-    
+    fetch("/student/company")
+    .then(res=>res.json())
+    .then(data=>{
+        console.log(data);
+        if (data.message) {
+          console.log(data.message);
+          alert(data.message);
+          window.location.href = data.redirectRoute;
+          return;
+        }
+        const companies = data;
+        const reportTemplate = document.getElementById("report-template");
+        const reportClone = reportTemplate.content.cloneNode(true);
+        content.innerHTML = "";
+        content.appendChild(reportClone);
+        for (let i = 0; i < companies.length; i++) {
+          const tableRow = document.createElement("tr");
+          const rowCell1 = document.createElement("td");
+          const rowCell2 = document.createElement("td");
+          const rowCell3 = document.createElement("td");
+          const rowCell4 = document.createElement("td");
+          const rowCell5 = document.createElement("td");
+          rowCell1.innerHTML = companies[i].name;
+          rowCell2.innerHTML = companies[i].category;
+          rowCell3.innerHTML = companies[i].description;
+          let status = "Not Applied"; 
+          for(let j=0;j<companies[i].students.length;j++){
+              if(companies[i].students[j] == roll){
+                  status = "Applied";
+              }
+          }
+          rowCell4.innerHTML =
+            '<span class="badge rounded-pill d-inline">' + status + "</span>";
+          if (status == "Applied") {
+            rowCell4.children[0].classList.add("badge-success");
+          } else {
+            rowCell4.children[0].classList.add("badge-warning");
+          }
+          rowCell5.innerHTML =
+            '<a href="#!" role="button" class="btn btn-sm btn-dark viewBtn">View</a>';
+          tableRow.appendChild(rowCell1);
+          tableRow.appendChild(rowCell2);
+          tableRow.appendChild(rowCell3);
+          tableRow.appendChild(rowCell4);
+          tableRow.appendChild(rowCell5);
+          const rows = document.getElementById("reportCompanyRows");
+          rows.appendChild(tableRow);
+          handleViewListener(rowCell5, companies[i]);
+        }
+    })
 });
+
+function handleViewListener(rowCell, company) {
+  const viewLink = rowCell.children[0];
+  viewLink.addEventListener("click", (e) => {
+    content.innerHTML =
+      "<div class='spinner-border text-primary' role='status'><span class='visually-hidden'>Loading...</span></div>;";
+    handleRenderOneCompany(company);
+  });
+}
+
+function handleRenderOneCompany(company) {
+  
+  const companyTemplate = document.getElementById("company-template");
+  const companyClone = companyTemplate.content.cloneNode(true);
+  content.innerHTML = "";
+  content.append(companyClone);
+  document.getElementById("companyName").innerHTML = company.name;
+  const dataBlock = document.getElementById("companyDataRows");
+  for(let i=0;i<company.eligibility.length;i++){
+      company["required "+company.eligibility[i].field] = company.eligibility[i].threshold;
+  }
+  company["Estimate Offer"]=company.estimateOffer;
+  for (key in company) {
+    if (typeof company[key] != "object") {
+      const tableRow1 = document.createElement("tr");
+      const rowCell1 = document.createElement("td");
+      const rowCell2 = document.createElement("td");
+      rowCell1.innerHTML = key.toString().toUpperCase();
+      rowCell2.innerHTML = company[key];
+      tableRow1.appendChild(rowCell1);
+      tableRow1.appendChild(rowCell2);
+      dataBlock.appendChild(tableRow1);
+    }
+  }
+}
 
 // records btn
 
@@ -20,7 +104,15 @@ for(let i=0;i<recordBtns.length;i++){
         
         fetch("/student/records/"+year)
         .then(res=>res.json())
-        .then(record=>{
+        .then(data=>{
+            console.log(data);
+            if(data.message){
+                console.log(data.message);
+                alert(data.message);
+                window.location.href = data.redirectRoute;
+                return;
+            }
+            const record = data;
             const recordClone = recordTemplate.content.cloneNode(true);
             content.innerHTML = "";
             content.append(recordClone);
@@ -61,6 +153,12 @@ editProfBtn.addEventListener("click",e=>{
     .then(res=>res.json())
     .then(data=>{
         console.log(data);
+        if (data.message) {
+          console.log(data.message);
+          alert(data.message);
+          window.location.href = data.redirectRoute;
+          return;
+        }
         const formClone = editFormTemplate.content.cloneNode(true);
         content.innerHTML='';
         content.appendChild(formClone);

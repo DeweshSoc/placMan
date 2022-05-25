@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/css/mdb.min.css" />
     <link rel="stylesheet" href="/css/styles.css" />
 
-    <script src="/js/teacher/signup.js" defer></script>
+    <script src="/js/company/signup.js" defer></script>
   </head>
   <body>
     <nav id="topbar" class="navbar navbar-expand-md sticky-top">
@@ -54,7 +54,7 @@
     </nav>
 
     <div id="content" class="content">
-      <h1 class="big-heading">Admin signup</h1>
+      <h1 class="big-heading">Company signup</h1>
       <h4 class="subtitle">Fill in your details.</h4>
 
       <form
@@ -64,18 +64,31 @@
         enctype="multipart/form-data"
       >
           
-           <input class="form-control mb-2" type="text" name="teacherName" id="teacherName"placeholder="Name">
-        <input class="form-control mb-2" type="text" name="teacherUid" id="teacherUid" placeholder="UID">
-        <input class="form-control mb-2" type="password" name="teacherPassword"id="teacherPassword" placeholder="Password">
-        <select class="form-control form-select mb-2" name="teacherGender" id="gender">
-            <option selected>Select gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Others">Others</option>
+           <input class="form-control mb-2" type="text" name="companyName" id="companyName"placeholder="Company Name">
+           <input type="text" class="form-control" name="companyId" id="companyId" placeholder="Company ID">
+        <input class="form-control mb-2" type="password" name="companyPassword"id="companyPassword" placeholder="Password">
+        <select class="form-control form-select mb-2" name="companyCategory" id="category">
+            <option selected>Select Category</option>
+            <option value="CS/IT">CS/IT</option>
+            <option value="Sales/Consultancy">Sales/Consultancy</option>
+            <option value="Edutech">Edutech</option>
+            <option value="Core">Core</option>
         </select>
-        <input class="form-control mb-2" type="text" name="teacherDept" id="teacherDept" placeholder="Department">
-        <input class="form-control mb-2" type="email" name="teacherEmail" id="teacherEmail" placeholder="Email">
-        <input class="form-control mb-2" type="phone" name="teacherPhone" id="teacherPhone" placeholder="Phone">
+        <textarea class="form-control" name="companyDescription" id="companyDescription" cols="30" rows="10" placeholder="Enter description of the company"></textarea>
+        <p class="card-text mt-2 mb-2">Enter elegibility details</p>
+        <div id="eligibility">
+          <input class="form-control" name="elegField1" type="text" id="field" placeholder="Enter field">
+          <input class="form-control" name="elegThreshold1" type="text" id="threshold" placeholder="Enter eligibility threshold">
+        </div>
+         <a
+          class="my-3 mx-auto btn btn-sm btn-primary"
+          href="#!"
+          id="add-field"
+          >Add field</a
+        >
+        <input type="text" name="estimateOffer" id="companyOffer" placeholder="Estimated offer" class="form-control">
+        <input class="form-control mb-2" type="email" name="companyEmail" id="companyEmail" placeholder="Email">
+        <input class="form-control mb-2" type="phone" name="companyPhone" id="companyPhone" placeholder="Phone">
         <input
           class="btn btn-lg btn-secondary d-block mx-auto my-4"
           type="submit"
@@ -100,17 +113,17 @@
   </body>
 </html>
 
-    <!-- <form action="/teacher/signup" method="POST" enctype="multipart/form-data">
-        <input type="text" name="teacherName" id="teacherName"placeholder="Name">
-        <input type="text" name="teacherUid" id="teacherUid" placeholder="UID">
-        <input type="password" name="teacherPassword"id="teacherPassword" placeholder="Password">
-        <select name="teacherGender" id="gender">
+    <!-- <form action="/company/signup" method="POST" enctype="multipart/form-data">
+        <input type="text" name="companyName" id="companyName"placeholder="Name">
+        <input type="text" name="companyUid" id="companyUid" placeholder="UID">
+        <input type="password" name="companyPassword"id="companyPassword" placeholder="Password">
+        <select name="companyGender" id="gender">
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Others">Others</option>
         </select>
-        <input type="text" name="teacherDept" id="teacherDept" placeholder="Department">
-        <input type="email" name="teacherEmail" id="teacherEmail" placeholder="Email">
-        <input type="phone" name="teacherPhone" id="teacherPhone" placeholder="Phone">
+        <input type="text" name="companyDept" id="companyDept" placeholder="Department">
+        <input type="email" name="companyEmail" id="companyEmail" placeholder="Email">
+        <input type="phone" name="companyPhone" id="companyPhone" placeholder="Phone">
         <input type="submit" value="Submit">
     </form> -->

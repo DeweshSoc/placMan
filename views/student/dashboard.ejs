@@ -67,6 +67,40 @@
       <%-include('includes/topbar');%> 
       <!--  -->
 
+       <template id="company-template">
+        <article class="card card-cascade narrower w-75">
+          <!-- Card heading -->
+          <section class="secondary-gradient py-3 mb-4 d-flex justify-content-center align-items-center">
+            <span class="text-dark mx-3" id="companyName"> </span>
+          </section>
+
+          <!-- Card content -->
+          <section class="px-4">
+            <!-- Table -->
+            <section class="table-wrapper">
+              <table class="table table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th class="th-md">Description</th>
+                    <th class="th-md">Company Info</th>
+                    
+                  </tr>
+                </thead>
+
+                <tbody id="companyDataRows">
+                 
+                  
+                </tbody>
+                
+              </table>
+            </section>
+
+            <hr class="my-0">
+
+         
+          </section>
+        </article></template>  
+
 
       <template id="record-template">
         <article class="card card-cascade narrower">
@@ -106,6 +140,44 @@
          
           </section>
         </article></template>
+
+        <template id="report-template">
+          
+        <article class="card card-cascade narrower w-75">
+          <!-- Card heading -->
+          <section class="secondary-gradient py-3 mb-4 d-flex justify-content-center align-items-center">
+            <span class="text-dark mx-3">Company wise list</span>
+          </section>
+
+          <!-- Card content -->
+          <section class="px-4">
+            <!-- Table -->
+            <section class="table-wrapper">
+              <table class="table table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th class="th-md">Company</th>
+                    <th class="th-md">Category</th>
+                    <th class="th-md">Description</th>
+                    <th class="th-md">Status</th>
+                    <th class="th-md">Action</th>
+                  </tr>
+                </thead>
+
+                <tbody id="reportCompanyRows">
+                  
+                  
+                </tbody>
+                
+              </table>
+            </section>
+
+            <hr class="my-0">
+         
+          </section>
+        </article>
+        </template>
+
 
       <template id="edit-form-template">
           <p class="subtitle"> Change the details for updation.</p>

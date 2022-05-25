@@ -29,6 +29,7 @@ const store = new MongoDbStore({
 const homeRoutes = require("./routes/home");
 const studentRoutes = require("./routes/student");
 const teacherRoutes = require("./routes/teacher");
+const companyRoutes = require("./routes/company");
 
 //models
 const Record = require("./models/record");
@@ -83,6 +84,7 @@ Record.find({})
     app.use("/home", homeRoutes);
     app.use("/student", studentRoutes);
     app.use("/teacher",teacherRoutes);
+    app.use("/company",companyRoutes);
     app.use((error, req, res, next) => {
       console.log(error);
       console.log("In main error handling middleware!");

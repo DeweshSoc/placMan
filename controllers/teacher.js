@@ -3,7 +3,8 @@ const bcrypt = require("bcryptjs");
 const Teacher = require("../models/teacher");
 const Record = require("../models/record");
 const Student = require("../models/student");
-const { find } = require("../models/teacher");
+const Notice = require("../models/notice");
+const Company = require("../models/company");
 
 exports.getSignup = (req, res, next) => {
   if (req.session.isTeacherLoggedIn) {
@@ -98,33 +99,46 @@ exports.postLogin = (req, res, next) => {
 exports.getTeacherHome = (req, res, next) => {
   if (req.session.isTeacherLoggedIn) {
     const id = req.session.teacher._id;
+    let years=[];
     Teacher.findOne({ _id: id })
-      .then((teacher) => {
-        if (!teacher) {
-          const err = new Error("teacher not found!");
-          return err;
-        }
-        return Record.find({})
-          .then((records) => {
-            let years = [];
-            records.forEach((rec) => {
-              years.push(rec.year);
-            });
-            return years;
-          })
-          .then((years) => {
-            return res.render("teacher/dashboard", {
-              teacher: teacher,
-              isTeacherLoggedIn: req.session.isTeacherLoggedIn,
-              mode: "teacher",
-              previousYears: years,
-            });
-          });
+    .then((teacher) => {
+      if (!teacher) {
+        const err = new Error("teacher not found!");
+        return err;
+      }
+      return Record.find({})
+      .then((records) => {
+        records.forEach((rec) => {
+          years.push(rec.year);
+        });
       })
-      .catch((err) => {
-        console.log(err);
-        return next(err);
+      .then(()=>{
+        return Notice.find({}).sort({date:-1})
+      })
+      .then(notices => {
+        const compNotices = [];
+        const adminNotices =[];
+        for(let i=0;i<notices.length;i++){
+          if(notices[i].admin==true){
+            adminNotices.push(notices[i]);
+          }else{
+            compNotices.push(notices[i]);
+          }
+        }
+        return res.render("teacher/dashboard", {
+          teacher: teacher,
+          isTeacherLoggedIn: req.session.isTeacherLoggedIn,
+          mode: "teacher",
+          previousYears: years,
+          notices:adminNotices,
+          compNotices:compNotices
+        });
       });
+    })
+    .catch((err) => {
+      console.log(err);
+      return next(err);
+    });
   } else {
     res.redirect("/home");
   }
@@ -270,7 +284,8 @@ exports.postFilterStudents=(req,res,next)=>{
     const branch = req.body.branch;
     const status = req.body.status;
     const company = req.body.company;
-    console.log(gender,branch,status,company);
+    const name = req.body.name;
+    console.log(gender,branch,status,company,name);
     const placedQuery = (req.body.status=="Placed")?true:false;
     const toSendStudents=[];
     Student.find({})
@@ -309,8 +324,15 @@ exports.postFilterStudents=(req,res,next)=>{
           companyFiltered.push(prev3[i]);
         }
       }
-      const prev4 = (company!="Select company")?companyFiltered:prev3
-      return prev4;
+      const prev4 = (company!="Select company")?companyFiltered:prev3;
+      const nameFiltered=[];
+      console.log(prev4);
+        for (let i = 0; i < prev4.length; i++) {
+          if (prev4[i].name == name) {
+            nameFiltered.push(prev4[i]);
+          }
+        }
+      return (name=="")?prev4:nameFiltered;
     })
     .then(students=>{
       res.send(JSON.stringify(students));
@@ -324,8 +346,204 @@ exports.postFilterStudents=(req,res,next)=>{
       res.status(500);
       res.send(JSON.stringify(responseMsg));
     })
+  }else{
+    res.redirect("/home");
   }
 }
+
+
+exports.postNotice=(req,res,next)=>{
+  if(req.session.isTeacherLoggedIn){
+    const noticeBody = req.body.notice;
+    const newNotice = new Notice({
+      date:new Date(),
+      body:noticeBody,
+      author:{
+        uid:req.session.teacher.uid,
+        name:req.session.teacher.name,
+        email:req.session.teacher.email
+      },
+      admin:(req.body.admin=="true")
+    });
+    newNotice.save()
+    .then(savedDoc=>{
+      const toSend = {
+        message:"New notice added",
+        redirectRoute:"/teacher/home"
+      }
+      res.send(JSON.stringify(toSend));
+    })
+    .catch(err=>{
+      console.log(err);
+      const responseMsg = {
+        message: err.message,
+        redirectRoute: "/teacher/home",
+      };
+      res.status(500);
+      res.send(JSON.stringify(responseMsg));
+    })
+  }else{
+    res.redirect("/home");
+  }
+}
+
+
+exports.getBlock=(req,res,next)=>{
+  if(req.session.isTeacherLoggedIn){
+    let blocked;
+    const roll = req.params.roll;
+    Student.findOne({roll:roll})
+    .then(student=>{
+      if(!student){
+       const err = new Error("No student found!");
+       throw err; 
+      }
+      if(student.blocked){
+        student.blocked=false;
+        blocked = false;
+      }else{
+        student.blocked = true;
+        blocked = true;
+      }
+      return student.save();
+    })
+    .then(savedDoc=>{
+      const responseMsg={
+        message:(blocked)?"Student blocked":"Student unblocked",
+        redirectRoute:"/teacher/home"
+      }
+      res.send(JSON.stringify(responseMsg));
+    })
+    .catch(err=>{
+      console.log(err);
+      const responseMsg = {
+        message: err.message,
+        redirectRoute: "/teacher/home",
+      };
+      res.status(500);
+      res.send(JSON.stringify(responseMsg));
+    })
+  }
+}
+
+exports.getPlaced=(req,res,next)=>{
+  if (req.session.isTeacherLoggedIn) {
+    let placed;
+    const roll = req.params.roll;
+    Student.findOne({ roll: roll })
+      .then((student) => {
+        if (!student) {
+          const err = new Error("No student found!");
+          throw err;
+        }
+        if (student.placed) {
+          student.placed = false;
+          placed = false;
+        } else {
+          student.placed = true;
+          placed = true;
+        }
+        return student.save();
+      })
+      .then((savedDoc) => {
+        const responseMsg = {
+          message: placed ? "Student placed" : "Student Unplaced",
+          redirectRoute: "/teacher/home",
+        };
+        res.send(JSON.stringify(responseMsg));
+      })
+      .catch((err) => {
+        console.log(err);
+        const responseMsg = {
+          message: err.message,
+          redirectRoute: "/teacher/home",
+        };
+        res.status(500);
+        res.send(JSON.stringify(responseMsg));
+      });
+  }
+}
+
+exports.getDeleteStudent=(req,res,next)=>{
+  if (req.session.isTeacherLoggedIn) {
+    console.log("in cone");
+    const roll = req.params.roll;
+    Student.findOne({ roll: roll })
+      .then((student) => {
+        if (!student) {
+          const err = new Error("No student found!");
+          throw err;
+        }
+        return Student.deleteOne({roll:roll})
+      })
+      .then((savedDoc) => {
+        const responseMsg = {
+          message: "Student deleted from the system",
+          redirectRoute: "/teacher/home",
+        };
+        res.send(JSON.stringify(responseMsg));
+      })
+      .catch((err) => {
+        console.log(err);
+        const responseMsg = {
+          message: err.message,
+          redirectRoute: "/teacher/home",
+        };
+        res.status(500);
+        res.send(JSON.stringify(responseMsg));
+      });
+  }
+}
+
+exports.getReport=(req,res,next)=>{
+  if(req.session.isTeacherLoggedIn){
+    let totalCompanies = 0;
+    const report = {};
+    Company.find({})
+    .then(companies=>{
+      report.companies = companies;
+      return Student.find({placed:true})
+      .then(students=>{
+        report.students=students;
+        res.send(JSON.stringify(report));
+      })
+    })
+    .catch(err=>{
+      console.log(err);
+      const responseMsg = {
+        message: err.message,
+        redirectRoute: "/teacher/home",
+      };
+      res.status(500);
+      res.send(JSON.stringify(responseMsg));
+    })
+  }
+}
+
+exports.getCompanies = (req, res, next) => {
+  if (req.session.isTeacherLoggedIn) {
+
+    Company.find({}, { cid: 0, password: 0, _id: 0, __v: 0 })
+      .then((companies) => {
+        if (!companies.length) {
+          const err = new Error("No companies found!");
+          err.setHttpStatusCode = 200;
+          throw err;
+        }
+        console.log(companies);
+        res.send(JSON.stringify(companies));
+      })
+      .catch((err) => {
+        console.log(err);
+        const responseMsg = {
+          message: err.message,
+          redirectRoute: "/teacher/home",
+        };
+        res.status(500);
+        res.send(JSON.stringify(responseMsg));
+      });
+  }
+};
 
 
 exports.logout = (req, res, next) => {
@@ -333,3 +551,13 @@ exports.logout = (req, res, next) => {
     res.redirect("/home");
   });
 };
+
+// Companies participated : 
+//                   <br>
+//                   Students placed :>
+//                   <br>
+//                   Placement percentage : 98%
+//                   <br>
+//                   Departments participated : 14
+//                   <br>
+//                   Average package : 7 LPA

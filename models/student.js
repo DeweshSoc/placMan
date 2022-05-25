@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Company = require("./company");
 
 const Schema = mongoose.Schema;
 
@@ -65,10 +66,13 @@ const studentSchema = new Schema({
   },
   phone:{
       type:String,
-      required:true
+      required:true,
   },
   placed: Boolean,
-  company: String
+  blocked:Boolean,
+  company: {
+      type:{name:String,id:{type:String}}
+  }
 });
 
 const Student = mongoose.model("Student", studentSchema);

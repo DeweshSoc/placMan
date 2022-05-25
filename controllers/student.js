@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 
 const Student = require("../models/student");
 const Record = require("../models/record");
+const Company = require("../models/company");
 
 exports.getSignup=(req,res,next)=>{
   if (req.session.isStudentLoggedIn) {
@@ -83,7 +84,9 @@ exports.postSignup=(req,res,next)=>{
         hscMarks:hsc,
         email:email,
         phone:phone,
-        gender:gender
+        gender:gender,
+        blocked:false,
+        company:{name:"",id:""}
       });
       return newStud.save();
     })
@@ -209,6 +212,14 @@ exports.getRecords=(req,res,next)=>{
       res.status(500);
       res.send(JSON.stringify(responseMsg));
     });
+  }else{
+    console.log("here");
+    const responseMsg = {
+      message: "You are not authorized",
+      redirectRoute: "/home",
+    };
+    res.status(500);
+    res.send(JSON.stringify(responseMsg));
   }
 }
 
@@ -392,6 +403,30 @@ exports.postSkillDel=(req,res,next)=>{
       });
   }
 }
+
+exports.getCompanies=(req,res,next)=>{
+  if(req.session.isStudentLoggedIn){
+    Company.find({},{cid:0,password:0,_id:0,__v:0})
+    .then(companies=>{
+      if (!companies.length) {
+            const err = new Error("No companies found!");
+            err.setHttpStatusCode = 200;
+            throw err;
+          }
+          res.send(JSON.stringify(companies));
+    })
+    .catch((err) => {
+          console.log(err);
+          const responseMsg = {
+            message: err.message,
+            redirectRoute: "/student/home",
+          };
+          res.status(500);
+          res.send(JSON.stringify(responseMsg));
+    });
+  }
+}
+
 
 exports.logout=(req,res,next)=>{
   req.session.destroy(()=>{

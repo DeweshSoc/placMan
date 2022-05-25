@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>PlacMan | A placement Management system</title>
+
+    <!-- Normalize browser inconsistencies -->
+    <link rel="stylesheet" href="/css/normalize.css" />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <!-- Font Awesome -->
+    <script defer src="/js/fontawesome-all.min.js"></script>
+    <!-- MD Bootstrap -->
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="/css/mdb.min.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+
+    <script src="/js/company/sidebar.js" defer></script>
+    <style>
+      /* Scrollbar styling */
+
+      body::-webkit-scrollbar {
+        width: 9px;
+      }
+
+      body::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: rgba(29, 17, 17, 0.788);
+      }
+
+      body::-webkit-scrollbar-track {
+        background-color: rgb(230, 223, 223);
+        border-radius: 10px;
+      }
+
+      /* Profile Modal */
+
+      .card.profile-card {
+        width: 100%;
+        margin: 0;
+      }
+
+      #profileModal .modal-content,
+      #profileModal .modal-content .modal-body,
+      #profileModal .modal-content .modal-body .card.profile-card {
+        border-radius: 10px;
+      }
+
+      #profileModal .modal-content .modal-body .card.profile-card img {
+        border-radius: 10px 10px 0 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Wrapper stretches to the whole viewport height -->
+    <div class="wrapper">
+      <!-- Sidebar -->
+      <%-include('includes/sidebar');%>
+
+      <!-- Main -->
+      <main>
+        <!-- Topbar -->
+        <%-include('includes/topbar');%>
+        <!--  -->
+
+        <template id="edit-form-template">
+          <p class="subtitle">Change details for updation</p>
+          <form
+            id="edit-form"
+            action="/company/signup"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <input
+              class="form-control mb-2"
+              type="text"
+              id="companyName"
+              name="companyName"
+              placeholder="Name"
+              required
+            />
+            <input
+              class="form-control mb-2"
+              type="email"
+              id="companyEmail"
+              name="companyEmail"
+              placeholder="Your email"
+              required
+            />
+            <input
+              class="form-control mb-2"
+              type="tel"
+              id="companyPhone"
+              name="companyPhone"
+              placeholder="your number"
+              required
+            />
+
+            <select
+              class="form-control form-select mb-2"
+              name="companyCategory"
+              id="companyCategory"
+            >
+              <option selected>Select Category</option>
+              <option value="CS/IT">CS/IT</option>
+              <option value="Sales/Consultancy">Sales/Consultancy</option>
+              <option value="Edutech">Edutech</option>
+              <option value="Core">Core</option>
+            </select>
+            <textarea
+              class="form-control"
+              name="companyDescription"
+              id="companyDescription"
+              cols="30"
+              rows="10"
+              placeholder="Enter description of the company"
+            ></textarea>
+            
+            <input
+              type="text"
+              name="estimateOffer"
+              id="companyOffer"
+              placeholder="Estimated offer"
+              class="form-control"
+            />
+            
+            <input
+              class="btn btn-lg btn-secondary d-block mx-auto my-4"
+              type="submit"
+              value="Submit"
+            />
+            
+          </form>
+        </template>
+
+        <input type="hidden" id="company-cid" value="<%=company.cid%>" />
+
+        <!-- Content -->
+        <div class="content" id="content">
+          <!-- First card -->
+
+          <div class="card mb-3" style="max-width: 540px">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img
+                  class="img-fluid rounded-start"
+                  src="/img/company.png"
+                  alt="company-img"
+                />
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title"><%=company.name%></h5>
+                  <p class="card-text">
+                    Category : <%=company.category%>
+                    <br />
+                    UID : <%=company.cid%>
+                    <br />
+                    Email : <%= company.email%>
+                    <br />
+                    Phone : <%=company.phone%>
+                    <br />
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <small class="text-muted"
+            >Company under placement control department</small
+          >
+          <article class="card card-cascade wider reverse my-4"></article>
+          <article class="card card-cascade wider reverse my-4">
+            <section class="card-body text-center">
+              <p class="card-text alert alert-primary">
+                <%=company.description%>
+              </p>
+            </section>
+          </article>
+
+           <h3 class="m-4">Company notices</h3>
+
+        <%for(let i=0;i<compNotices.length;i++){%>
+          <article class="card">
+            <section class="card-body">
+              <h6 class="text-success accent-3">
+                <i class="far fa-bell"></i>
+                <%=compNotices[i].date%>
+              </h6>
+              <br>
+              
+              <p class="card-text">
+                <%=compNotices[i].body%>
+              </p>
+            </section>
+            <section class="card-footer text-right">
+              <a href="mailto:<%=compNotices[i].author.email%>"><button class="btn btn-success accent-3" data-toggle="modal" data-target="#profileModal">Contact : <%=compNotices[i].author.name%></button></a>
+            </section>
+          </article> 
+        <% } %> 
+
+
+        </div>
+      </main>
+    </div>
+
+
+
+
+    <!-- Bootstrap dependencies -->
+    <!-- First jQuery, then Popper.js and lastly Bootstrap JS -->
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/js/mdb.min.js"></script>
+    <!-- Custom script -->
+    <script src="/js/scripts.js"></script>
+  </body>
+</html>

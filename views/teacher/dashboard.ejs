@@ -226,10 +226,189 @@
                 <option value="TCS">TCS</option>
                 <option value="Cognizant">Cognizant</option>
               </select>
-
+              <input type="text" class="form-control" id="filter-name" name="name">
               <input type="submit" class="btn btn-lg btn-secondary" value="Submit">
           </form>
         </template>
+
+        <template id="report-template">
+          <div class="card mb-3" style="max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-md-4">
+                  <img class="img-fluid rounded-start" src="/img/techno.png" alt="techno">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Placement Report</h5>
+                <p class="card-text" id="reportTitle">
+                  Companies participated :
+                  <br>
+                  Students placed : 
+                  <br>
+                  Placement percentage : 98%
+                  <br>
+                  Departments participated : 14
+                  <br>
+                  Average package : 7 LPA
+                </p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <article class="card card-cascade narrower w-75">
+          <!-- Card heading -->
+          <section class="secondary-gradient py-3 mb-4 d-flex justify-content-center align-items-center">
+            <span class="text-dark mx-3">Company wise list</span>
+          </section>
+
+          <!-- Card content -->
+          <section class="px-4">
+            <!-- Table -->
+            <section class="table-wrapper">
+              <table class="table table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th class="th-md">Company</th>
+                    <th class="th-md">Students placed</th>
+                    <th class="th-md">Average offer</th>
+                    <th class="th-md">Max offer</th>
+                    <th class="th-md">Category</th>
+                  </tr>
+                </thead>
+
+                <tbody id="reportCompanyRows">
+                  
+                  
+                </tbody>
+                
+              </table>
+            </section>
+
+            <hr class="my-0">
+
+         
+          </section>
+        </article>
+
+        <article class="card card-cascade narrower w-75">
+          <!-- Card heading -->
+          <section class="secondary-gradient py-3 mb-4 d-flex justify-content-center align-items-center">
+            <span class="text-dark mx-3">Student wise list</span>
+          </section>
+
+          <!-- Card content -->
+          <section class="px-4">
+            <!-- Table -->
+            <section class="table-wrapper">
+              <table class="table table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th class="th-md">Roll No</th>
+                    <th class="th-md">Name</th>
+                    <th class="th-md">status</th>
+                    <th class="th-md">Branch</th>
+                    <th class="th-md">Company</th>
+                    
+
+                  </tr>
+                </thead>
+
+                <tbody id="reportStudentRows">
+                 
+                  
+                </tbody>
+                
+              </table>
+            </section>
+
+            <hr class="my-0">
+
+         
+          </section>
+        </article>
+
+        </template>
+
+        <template id="companyAll-template">
+        
+        <br>
+        <article class="card card-cascade narrower w-75">
+          <!-- Card heading -->
+          <section class="secondary-gradient py-3 mb-4 d-flex justify-content-center align-items-center">
+            <span class="text-dark mx-3">Companies</span>
+          </section>
+
+          <!-- Card content -->
+          <section class="px-4">
+            <!-- Table -->
+            <section class="table-wrapper">
+              <table class="table table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th class="th-md">Company</th>
+                    <th class="th-md">Students placed</th>
+                    <th class="th-md">Average offer</th>
+                    <th class="th-md">Category</th>
+                    <th class="th-md">Action</th>
+
+                  </tr>
+                </thead>
+
+                <tbody id="companyRows">
+                  
+                  
+                </tbody>
+                
+              </table>
+            </section>
+
+            <hr class="my-0">
+
+         
+          </section>
+        </article>
+
+
+        </template>
+
+        <template id="company-template">
+        <article class="card card-cascade narrower w-75">
+          <!-- Card heading -->
+          <section class="secondary-gradient py-3 mb-4 d-flex justify-content-center align-items-center">
+            <span class="text-dark mx-3" id="companyName"> </span>
+          </section>
+
+          <!-- Card content -->
+          <section class="px-4">
+            <!-- Table -->
+            <section class="table-wrapper">
+              <table class="table table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th class="th-md">Description</th>
+                    <th class="th-md">Company Info</th>
+                    
+                  </tr>
+                </thead>
+
+                <tbody id="companyDataRows">
+                 
+                  
+                </tbody>
+                
+              </table>
+            </section>
+
+            <hr class="my-0">
+
+         
+          </section>
+        </article></template>  
+
+
+
 
       <input type="hidden" id="teacher-uid" value="<%=teacher.uid%>">
 
@@ -275,23 +454,48 @@
 
         <!-- Second card -->
         <h3 class="m-4">Notices</h3>
-        <article class="card">
-          <section class="card-body">
-            <h6 class="text-success accent-3">
-              <i class="far fa-bell"></i>
-              Update
-            </h6>
-            <br>
 
-            <p class="card-text">
-              All unplaced students have to compulsorily sit for Cognizant and Tcs on 29th of June, 2021. You may also refer to the mail regrading this.
-            </p>
-          </section>
-          <section class="card-footer text-right">
-            <a href="#!"><button class="btn btn-success accent-3" data-toggle="modal" data-target="#profileModal">View email</button></a>
-          </section>
-        </article>
-        
+        <%for(let i=0;i<notices.length;i++){%>
+          <article class="card">
+            <section class="card-body">
+              <h6 class="text-success accent-3">
+                <i class="far fa-bell"></i>
+                <%=notices[i].date%>
+              </h6>
+              <br>
+              
+              <p class="card-text">
+                <%=notices[i].body%>
+              </p>
+            </section>
+            <section class="card-footer text-right">
+              <a href="mailto:<%=notices[i].author.email%>"><button class="btn btn-success accent-3" data-toggle="modal" data-target="#profileModal">Contact : <%=notices[i].author.name%></button></a>
+            </section>
+          </article> 
+        <% } %> 
+
+        <h3 class="m-4">Company notices</h3>
+
+        <%for(let i=0;i<compNotices.length;i++){%>
+          <article class="card">
+            <section class="card-body">
+              <h6 class="text-success accent-3">
+                <i class="far fa-bell"></i>
+                <%=compNotices[i].date%>
+              </h6>
+              <br>
+              
+              <p class="card-text">
+                <%=compNotices[i].body%>
+              </p>
+            </section>
+            <section class="card-footer text-right">
+              <a href="mailto:<%=compNotices[i].author.email%>"><button class="btn btn-success accent-3" data-toggle="modal" data-target="#profileModal">Contact : <%=compNotices[i].author.name%></button></a>
+            </section>
+          </article> 
+        <% } %> 
+
+
       </div>
     </main>
   </div>
