@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const Student = require("../models/student");
 const Record = require("../models/record");
 const Company = require("../models/company");
+const Notice = require("../models/notice");
 
 exports.getSignup=(req,res,next)=>{
   if (req.session.isStudentLoggedIn) {
@@ -171,13 +172,26 @@ exports.getStudentHome=(req,res,next)=>{
       })
       .then(years=>{
         const dt = new Date(student.dob);
-        return res.render("student/dashboard",{
-          student:student,
-          dob:dt.toDateString(),
-          isStudentLoggedIn:req.session.isStudentLoggedIn,
-          mode:"student",
-          previousYears:years
-        });
+        Notice.find({}).sort({date:-1})
+        .then(notices=>{
+           const compNotices = [];
+           const adminNotices = [];
+           for (let i = 0; i < notices.length; i++) {
+             if (notices[i].admin == true) {
+               adminNotices.push(notices[i]);
+             } else {
+               compNotices.push(notices[i]);
+             }
+            }
+            return res.render("student/dashboard",{
+              student:student,
+              dob:dt.toDateString(),
+              isStudentLoggedIn:req.session.isStudentLoggedIn,
+              mode:"student",
+              previousYears:years,
+              notices:adminNotices
+            });
+        })
       })
     })
     .catch(err=>{
@@ -406,7 +420,7 @@ exports.postSkillDel=(req,res,next)=>{
 
 exports.getCompanies=(req,res,next)=>{
   if(req.session.isStudentLoggedIn){
-    Company.find({},{cid:0,password:0,_id:0,__v:0})
+    Company.find({},{password:0,_id:0,__v:0})
     .then(companies=>{
       if (!companies.length) {
             const err = new Error("No companies found!");
@@ -427,6 +441,48 @@ exports.getCompanies=(req,res,next)=>{
   }
 }
 
+exports.getApply=(req,res,next)=>{
+  if (req.session.isStudentLoggedIn) {
+    let applied=false;
+    const roll = req.params.roll;
+    const cid = req.params.cid;
+    Company.findOne({ cid:cid })
+      .then((company) => {
+        if (!company) {
+          const err = new Error("No company found!");
+          throw err;
+        }
+
+        for(let i=0;i<company.students.length;i++){
+          if(company.students[i]==roll){
+            applied = true;
+          }
+        }
+        if(applied){
+          const err = new Error("Already applied in this company");
+          throw err;
+        }
+        company.students.push(roll);
+        return company.save();
+      })
+      .then((savedDoc) => {
+        const responseMsg = {
+          message: "Applied",
+          redirectRoute: "/student/home",
+        };
+        res.send(JSON.stringify(responseMsg));
+      })
+      .catch((err) => {
+        console.log(err);
+        const responseMsg = {
+          message: err.message,
+          redirectRoute: "/student/home",
+        };
+        res.status(500);
+        res.send(JSON.stringify(responseMsg));
+      });
+  }
+}
 
 exports.logout=(req,res,next)=>{
   req.session.destroy(()=>{

@@ -15,7 +15,7 @@ router.get("/student/:roll", teacherController.getStudent);
 router.post("/filter",teacherController.postFilterStudents);
 router.post("/notices",teacherController.postNotice);
 router.get("/block/:roll",teacherController.getBlock);
-router.get("/place/:roll",teacherController.getPlaced);
+router.get("/place/:roll/:cname",teacherController.getPlaced);
 router.get("/delete/:roll",teacherController.getDeleteStudent);
 router.get("/company",teacherController.getCompanies);
 router.get("/report",teacherController.getReport);

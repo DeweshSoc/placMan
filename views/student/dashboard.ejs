@@ -325,43 +325,34 @@
             <% for(let i=0;i<student.skills.length;i++){ %>
               <button type="button" class="btn btn-sm btn-outline-dark btn-rounded m-1" data-mdb-ripple-color="dark"><%=student.skills[i]%></button>
             <% } %>  
-            <a href="#" class="d-block"><button class="btn btn-outline-primary darken-4 mt-4">Make changes</button></a>
+            <!-- <a href="#" class="d-block"><button class="btn btn-outline-primary darken-4 mt-4"></button></a> -->
           </section>
           
-          <section class="card-body text-center">
-            <h4 class="card-title">Companies</h4>
-            <p class="card-text">
-              Till now you have applied for 5 companies.
-            </p>
-            <button type="button" class="btn btn-sm btn-secondary btn-rounded m-1" data-mdb-ripple-color="dark">Infosys</button>
-            <button type="button" class="btn btn-sm btn-secondary btn-rounded m-1" data-mdb-ripple-color="dark">Infosys</button>
-            <button type="button" class="btn btn-sm btn-secondary btn-rounded m-1" data-mdb-ripple-color="dark">Amazon</button>
-            <button type="button" class="btn btn-sm btn-secondary btn-rounded m-1" data-mdb-ripple-color="dark">Infosys</button>
-            <button type="button" class="btn btn-sm btn-secondary btn-rounded m-1" data-mdb-ripple-color="dark">Capgemini</button>
-
-            <a href="#" class="d-block"><button class="btn btn-outline-indigo darken-4 mt-4">Your Applications</button></a>
-          </section>
+          
           
         </article>
 
         <!-- Second card -->
         <h3 class="m-4">Notices</h3>
-        <article class="card">
-          <section class="card-body">
-            <h6 class="text-success accent-3">
-              <i class="far fa-bell"></i>
-              Update
-            </h6>
-            <br>
 
-            <p class="card-text">
-              All unplaced students have to compulsorily sit for Cognizant and Tcs on 29th of June, 2021. You may also refer to the mail regrading this.
-            </p>
-          </section>
-          <section class="card-footer text-right">
-            <a href="#"><button class="btn btn-success accent-3" data-toggle="modal" data-target="#profileModal">View email</button></a>
-          </section>
-        </article>
+        <%for(let i=0;i<notices.length;i++){%>
+          <article class="card">
+            <section class="card-body">
+              <h6 class="text-success accent-3">
+                <i class="far fa-bell"></i>
+                <%=notices[i].date%>
+              </h6>
+              <br>
+              
+              <p class="card-text">
+                <%=notices[i].body%>
+              </p>
+            </section>
+            <section class="card-footer text-right">
+              <a href="mailto:<%=notices[i].author.email%>"><button class="btn btn-success accent-3" data-toggle="modal" data-target="#profileModal">Contact : <%=notices[i].author.name%></button></a>
+            </section>
+          </article> 
+        <% } %> 
         
       </div>
     </main>

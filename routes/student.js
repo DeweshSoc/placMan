@@ -14,6 +14,7 @@ router.post("/edit/:roll",studentController.postEditForm);
 router.post("/skills/add/:roll",studentController.postSkillAdd);
 router.get("/skills/del/:roll",studentController.getSkillDel);
 router.post("/skills/del/:roll",studentController.postSkillDel);
+router.get("/apply/:roll/:cid",studentController.getApply)
 router.get("/company",studentController.getCompanies);
 router.get("/logout",studentController.logout);
 module.exports = router;

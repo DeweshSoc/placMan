@@ -52,21 +52,21 @@ cmpSidebarBtn.addEventListener("click",e=>{
           tableRow.appendChild(rowCell5);
           const rows = document.getElementById("reportCompanyRows");
           rows.appendChild(tableRow);
-          handleViewListener(rowCell5, companies[i]);
+          handleViewListener(rowCell5, companies[i],status);
         }
     })
 });
 
-function handleViewListener(rowCell, company) {
+function handleViewListener(rowCell, company,status) {
   const viewLink = rowCell.children[0];
   viewLink.addEventListener("click", (e) => {
     content.innerHTML =
       "<div class='spinner-border text-primary' role='status'><span class='visually-hidden'>Loading...</span></div>;";
-    handleRenderOneCompany(company);
+    handleRenderOneCompany(company,1,status);
   });
 }
 
-function handleRenderOneCompany(company) {
+function handleRenderOneCompany(company,marker,status) {
   
   const companyTemplate = document.getElementById("company-template");
   const companyClone = companyTemplate.content.cloneNode(true);
@@ -90,6 +90,30 @@ function handleRenderOneCompany(company) {
       dataBlock.appendChild(tableRow1);
     }
   }
+
+  if(marker==1){
+    const cid = company.cid;
+    const applyBtn = document.createElement("button");
+    applyBtn.classList.add("btn","btn-secondary","m-3");
+    applyBtn.id="add-btn";
+    applyBtn.innerHTML = "Apply";
+    content.appendChild(applyBtn);
+     document.getElementById("add-btn").addEventListener("click",e=>{
+      content.innerHTML =
+      "<div class='spinner-border text-primary' role='status'><span class='visually-hidden'>Loading...</span></div>;";
+      
+      console.log("here");
+      fetch("/student/apply/" + roll+"/"+cid)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        alert(data.message);
+        window.location.href = data.redirectRoute;
+      })
+      .catch((err) => console.log(err));
+    })
+  }
+
 }
 
 // records btn

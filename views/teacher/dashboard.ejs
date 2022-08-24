@@ -222,11 +222,13 @@
               </select>
               <select id="filter-company" name="company" class="form-control form-select mb-2">
                 <option selected>Select company</option>
-                <option value="LTI">LTI</option>
-                <option value="TCS">TCS</option>
-                <option value="Cognizant">Cognizant</option>
+                <% for(let i=0;i<companies.length;i++){ %>
+                
+                  <option value="<%=companies[i].name%>"><%=companies[i].name%></option>
+
+                <% } %>  
               </select>
-              <input type="text" class="form-control" id="filter-name" name="name">
+              <input type="text" placeholder="Name" class="form-control mb-2" id="filter-name" name="name">
               <input type="submit" class="btn btn-lg btn-secondary" value="Submit">
           </form>
         </template>
@@ -272,8 +274,7 @@
                   <tr>
                     <th class="th-md">Company</th>
                     <th class="th-md">Students placed</th>
-                    <th class="th-md">Average offer</th>
-                    <th class="th-md">Max offer</th>
+                    <th class="th-md">Estimated offer</th>
                     <th class="th-md">Category</th>
                   </tr>
                 </thead>

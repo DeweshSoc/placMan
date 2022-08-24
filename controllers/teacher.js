@@ -125,14 +125,18 @@ exports.getTeacherHome = (req, res, next) => {
             compNotices.push(notices[i]);
           }
         }
-        return res.render("teacher/dashboard", {
-          teacher: teacher,
-          isTeacherLoggedIn: req.session.isTeacherLoggedIn,
-          mode: "teacher",
-          previousYears: years,
-          notices:adminNotices,
-          compNotices:compNotices
-        });
+        Company.find({},{password:0})
+        .then(companies=>{
+          return res.render("teacher/dashboard", {
+            teacher: teacher,
+            isTeacherLoggedIn: req.session.isTeacherLoggedIn,
+            mode: "teacher",
+            previousYears: years,
+            notices:adminNotices,
+            compNotices:compNotices,
+            companies:companies
+          });
+        })
       });
     })
     .catch((err) => {
@@ -430,6 +434,8 @@ exports.getPlaced=(req,res,next)=>{
   if (req.session.isTeacherLoggedIn) {
     let placed;
     const roll = req.params.roll;
+    const cName = req.params.cname;
+    console.log("here",cName);
     Student.findOne({ roll: roll })
       .then((student) => {
         if (!student) {
@@ -439,11 +445,22 @@ exports.getPlaced=(req,res,next)=>{
         if (student.placed) {
           student.placed = false;
           placed = false;
+          return student.save();
         } else {
-          student.placed = true;
-          placed = true;
+          return Company.findOne({name:cName})
+          .then(company=>{
+            console.log(company);
+            company.students.push(roll);
+            return company.save();
+          })
+          .then(savedDoc=>{
+            placed = true;
+            student.placed = true;
+            student.company.name=savedDoc.name;
+            student.company.id=savedDoc.cid;
+            return student.save();
+          })
         }
-        return student.save();
       })
       .then((savedDoc) => {
         const responseMsg = {
@@ -530,7 +547,6 @@ exports.getCompanies = (req, res, next) => {
           err.setHttpStatusCode = 200;
           throw err;
         }
-        console.log(companies);
         res.send(JSON.stringify(companies));
       })
       .catch((err) => {
