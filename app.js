@@ -101,7 +101,10 @@ Record.find({})
       console.log(err);
   });
 
-const port = process.env.PORT;
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 5000;
+}
 const MONGODB_URI = process.env.MONGODB_URI;
 mongoose
   .connect(MONGODB_URI, {
