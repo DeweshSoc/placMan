@@ -1,14 +1,66 @@
-Steps for setup:
-1) Download the codebase as zip. Extract it wherever you want (preferably on your desktop).
-2) Navigate into the extracted folder.
-3) Use command `npm install .` This will install all required packages to run the app. (make sure you have node.js installed)
-4) Also install nodemon if not already installed -- `npm i nodemon`
-5) Use the command `nodemon app.js` to start the app
-6) You will probably get error regarding dotenv or environment variables setup. So, now you need to setup your environment variables.
-7) In the root directory (the folder you just extracted) make a file named `.env`
-8) In that file paste:
-`PORT=3000`
-`MONGODB_URI="a mongodb uri string"` on two seperate lines
-10) Then ask me personally for mongoDB URI (you can also create your own using your own database). You need to put the actual MongoDB uri within the above string.
-11) After that use `nodemon app.js` Everything should run fine.
-12) Sign up as student then login
+# placman
+A placement management app for college department. This centralised system can be used to automate, digitize and reduce manual work. It can be used by students, faculty members, company representatives to coordinate and smoothen the placement procedure.
+
+
+## Features
+
+- Digital record keeping
+- Direct application for job roles
+- Maintain and Assert placement policy
+- Manage student placement flow
+- Add notices, Block students, Place candidates, Job listing
+
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/DeweshSoc/placman.git
+```
+
+Go to the project directory
+
+```bash
+  cd placman
+```
+
+Install dependencies
+
+```bash
+  npm install .
+```
+Create `.env` file
+```bash
+  touch .env
+```
+
+Set environment variables
+
+Start the server
+
+```bash
+  node app.js
+```
+``Server available at http://localhost:5000``
+
+
+
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`MONGODB_URI` set to your mongodb atlas app connection uri
+
+
+## Screenshots
+![Placman-home-page](https://user-images.githubusercontent.com/60105121/224003851-fdbffa7e-3af5-4544-81a4-cf5b8a8ed12e.png)
+
+![Screenshot from 2023-03-09 16-04-01](https://user-images.githubusercontent.com/60105121/224004323-90caa9f3-3913-4f5d-8d4a-a5f3daa02995.png)![Screenshot from 2023-03-09 16-05-37](https://user-images.githubusercontent.com/60105121/224004331-aa30508d-e895-443f-8d7b-97aff8677bf6.png)
+
+
+## Authors
+
+- [@deweshsoc](https://www.github.com/deweshsoc)
+
